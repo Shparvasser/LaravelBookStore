@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CategorySeeder extends Seeder
+class BookCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,10 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
-            DB::table('categories')->insert([
-                'title' => 'Category-' . $i,
+        for ($i = 0; $i < 20; $i++) {
+            DB::table('book_category')->insert([
+                'book_id' => rand(1, 10),
+                'category_id' => rand(1, 10),
             ]);
         }
     }

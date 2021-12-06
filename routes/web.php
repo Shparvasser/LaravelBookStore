@@ -14,5 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [BlogController::class, 'index']);
-Route::get('/category/{slug}', [BlogController::class, 'getPostsByCategory'])->name('getPostsByCategory');
+// Route::get('/', [BlogController::class, 'index']);
+// Route::get('/category/{slug}', [BlogController::class, 'getPostsByCategory'])->name('getPostsByCategory');
+
+Route::get('/', function () {
+    return view('home');
+});
+Route::get('/about', function () {
+    return view('about');
+});
+Route::get('/singup', function () {
+    return view('singup');
+});
+Route::get('/singin', function () {
+    return view('singin');
+});

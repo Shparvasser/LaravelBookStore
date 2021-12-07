@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +27,9 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-Route::post('/contact/submit', function () {
-    return "Okey";
-})->name('contact-form');
+
+Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact-form');
+
 Route::get('/login', function () {
     return view('login');
 })->name('login');

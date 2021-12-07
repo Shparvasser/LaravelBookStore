@@ -21,6 +21,7 @@ class BookSeeder extends Seeder
                 'title' => Str::random(10),
                 'photo' => Str::random(10),
                 'page' => rand(50, 300),
+                'rating' => rand(1, 5),
             ]);
         }
     }

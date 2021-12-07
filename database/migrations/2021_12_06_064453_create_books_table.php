@@ -20,6 +20,7 @@ class CreateBooksTable extends Migration
                     $table->string('title');
                     $table->binary('photo');
                     $table->integer('page')->unsigned();
+                    $table->decimal('rating', 2, 1);
                     $table->timestamps();
                 });
             }

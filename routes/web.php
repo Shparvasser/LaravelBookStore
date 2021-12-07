@@ -19,13 +19,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 Route::get('/about', function () {
     return view('about');
-});
-Route::get('/singup', function () {
-    return view('singup');
-});
-Route::get('/singin', function () {
-    return view('singin');
-});
+})->name('about');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+Route::post('/contact/submit', function () {
+    return "Okey";
+})->name('contact-form');
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+Route::post('/login/submit', function () {
+    return view('login');
+})->name('login-form');

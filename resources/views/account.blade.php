@@ -14,4 +14,5 @@
     @parent
 <p>If you want to register a new user,you need to logout</p>
 <a href="/logout">Logout</a>
+<a href="/book">Create book</a>
 @endsection

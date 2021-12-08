@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +25,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/contact', function () {
-    if (Auth::check()) {
-        return redirect()->route('account');
-    }
-    return view('contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact-form');
 
@@ -48,11 +44,5 @@ Route::get('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-
-
-// Route::get('/login', function () {
-//     return view('login');
-// })->name('login');
-
-// Route::get('/account',[ContactController::class,'getUser'])->middleware('auth')
-// Route::get('/contact/user', [ContactController::class, 'getUser'])->name('contact-user');
+Route::get('/book', [BookController::class, 'index'])->name('book');
+Route::post('/book/create', [BookController::class, 'create'])->name('book-create');

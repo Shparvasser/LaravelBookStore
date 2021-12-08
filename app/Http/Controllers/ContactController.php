@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check()) {
+            return redirect()->route('account');
+        }
+        return view('contact');
+    }
     public function submit(ContactRequest $req)
     {
         if (Auth::check()) {
@@ -26,9 +33,5 @@ class ContactController extends Controller
     {
         $user = $req->user();
         return view('account', ['user' => $user]);
-    }
-    public function mainPage(Request $req)
-    {
-        # code...
     }
 }

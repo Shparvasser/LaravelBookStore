@@ -18,9 +18,10 @@ class CreateBooksTable extends Migration
                     $table->id();
                     $table->bigInteger('author_id')->unsigned();
                     $table->string('title');
-                    $table->binary('photo');
+                    $table->text('photo');
                     $table->integer('page')->unsigned();
-                    $table->decimal('rating', 2, 1);
+                    $table->decimal('rating', 2, 1)->default(5.0);
+                    $table->text('content');
                     $table->timestamps();
                 });
             }

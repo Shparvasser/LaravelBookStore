@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check()) {
+            return redirect()->route('account');
+        }
+        return view('login');
+    }
     public function login(LoginRequest $req)
     {
         if (Auth::check()) {

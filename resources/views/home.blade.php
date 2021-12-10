@@ -13,9 +13,6 @@
     <a href="#" class="btn btn-outline-primary">Category 4</a>
     <a href="#" class="btn btn-outline-primary">Category 5</a>
 </div>
-@isset($file)
-    <img class='img-fluid' src="{{asset('/storage/' . $file)}}" alt="">
-@endisset
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach ($books as $book)
         <div class="col mb-4">
@@ -29,8 +26,12 @@
                 <div class="py-2">{{$book->created_at}}</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <form action="{{route('view',[$book->id])}}">
+                            <button class="btn btn-sm btn-outline-secondary">View</button>
+                        </form>
+                        <form action="/edit">
+                            <button class="btn btn-sm btn-outline-secondary">Edit</button>
+                        </form>
                     </div>
                     <div>Rating:{{$book->rating}}</div>
                 </div>

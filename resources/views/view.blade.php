@@ -17,4 +17,14 @@
         </div>
     </div>
 </div>
+<form action="#" method="post">
+    @csrf
+    <div class="form-group mb-3">
+        <label for="content">Comment:</label>
+        <textarea class="form-control mb-2" name="content" id="content" rows="3"></textarea>
+        <label for="content">Rating:</label>
+        <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
+    </div>
+    <button type="submit" class="btn btn-success">Send</button>
+</form>
 @endsection

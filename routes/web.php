@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -41,4 +42,10 @@ Route::get('/logout', function () {
 Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
-Route::get('/view/{id}', [ViewController::class, 'index'])->middleware('auth')->name('view');
+Route::get('/view/{id}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
+Route::get('/edit/{id}', [BookController::class, 'edit'])->middleware('auth')->name('book-edit');
+Route::post('/edit/{id}', [BookController::class, 'update'])->name('book-update');
+
+Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
+    Route::get('/',  [AdminController::class, 'index']);
+});

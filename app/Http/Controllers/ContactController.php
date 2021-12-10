@@ -26,6 +26,7 @@ class ContactController extends Controller
         $user->email = $req->input('email');
         $user->password = $req->input('password');
         $user->save();
+        $user->assignRole('user');
         Auth::login($user);
         return redirect()->route('account')->with('success', 'Welcom to our office');
     }

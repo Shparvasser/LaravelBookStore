@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Book;
 
-class ViewController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $book = Book::where('id', $id)->first();
-        return view('view', ['book' => $book]);
+        $book = new Book();
+        $books = $book->all();
+        return view('admin.admin_panel', ['books' => $books]);
     }
 
     /**

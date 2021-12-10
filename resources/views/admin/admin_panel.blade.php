@@ -1,18 +1,11 @@
 @extends('layouts.app')
 
 
-@section('title','Main page')
+@section('title','Admin page')
 
 @section('content')
 
-<h1>Main page</h1>
-<div class="mb-4" role="group" aria-label="Basic outlined example">
-    <a href="#" class="btn btn-outline-primary active">Category 1</a>
-    <a href="#" class="btn btn-outline-primary">Category 2</a>
-    <a href="#" class="btn btn-outline-primary">Category 3</a>
-    <a href="#" class="btn btn-outline-primary">Category 4</a>
-    <a href="#" class="btn btn-outline-primary">Category 5</a>
-</div>
+<h1>Admin page</h1>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach ($books as $book)
         <div class="col mb-4">
@@ -26,12 +19,12 @@
                 <div class="py-2">{{$book->created_at}}</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <form action="{{route('book-show',[$book->id])}}">
-                            <button class="btn btn-sm btn-outline-secondary">View</button>
-                        </form>
-                        <form action="{{route('book-edit',[$book->id])}}">
+                        {{-- <form action="{{route('',[$book->id])}}">
+                            <button class="btn btn-sm btn-outline-secondary">Delete</button>
+                        </form> --}}
+                        {{-- <form action="">
                             <button class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </form>
+                        </form> --}}
                     </div>
                     <div>Rating:{{$book->rating}}</div>
                 </div>

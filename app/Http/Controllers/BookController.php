@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -19,6 +20,7 @@ class BookController extends Controller
         $book = new Book();
         $book->author_id = $req->user()->id;
         $book->title = $req->input('title');
+        $book->slug = Str::slug($book->title, '-');
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');
@@ -78,6 +80,7 @@ class BookController extends Controller
         $book = Book::find($id);
         $book->author_id = $req->user()->id;
         $book->title = $req->input('title');
+        $book->slug = Str::slug($book->title, '-');
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');

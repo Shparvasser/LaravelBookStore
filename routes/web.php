@@ -43,7 +43,7 @@ Route::get('/logout', function () {
 Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
-Route::get('/view/{id}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
+Route::get('/view/{id}/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
 
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {

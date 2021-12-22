@@ -85,7 +85,7 @@ class BookController extends Controller
         if ($req->input('categories')) {
             $book->categories()->sync($req->input('categories'));
         }
-        return redirect()->route('book-show', $id);
+        return redirect()->route('admin-panel')->with('success', 'The book has been updated');
     }
 
     /**
@@ -96,6 +96,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::find($id)->delete();
+        return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
     }
 }

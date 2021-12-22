@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ViewController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +44,11 @@ Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
 Route::get('/view/{id}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
-Route::get('/edit/{id}', [BookController::class, 'edit'])->middleware('auth')->name('book-edit');
-Route::post('/edit/{id}', [BookController::class, 'update'])->name('book-update');
 
-Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
-    Route::get('/',  [AdminController::class, 'index']);
+
+Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+    Route::get('/',  [AdminController::class, 'index'])->name('admin-panel');
+    Route::get('/edit/{id}', [BookController::class, 'edit'])->middleware('auth')->name('book-edit');
+    Route::post('/edit/{id}', [BookController::class, 'update'])->name('book-update');
+    Route::get('delete/{id}', [BookController::class, 'destroy'])->name('book-delete');
 });

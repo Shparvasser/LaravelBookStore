@@ -29,9 +29,6 @@
                         <form action="{{route('book-show',[$book->id])}}">
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
-                        <form action="{{route('book-edit',[$book->id])}}">
-                            <button class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </form>
                     </div>
                     <div>Rating:{{$book->rating}}</div>
                 </div>

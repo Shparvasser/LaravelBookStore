@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -44,10 +45,11 @@ Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
 Route::get('/view/{id}/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
+Route::post('/view/{id}/{slug}', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
 
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
-    Route::get('/',  [AdminController::class, 'index'])->name('admin-panel');
+    Route::get('/', [AdminController::class, 'index'])->name('admin-panel');
     Route::get('/edit/{id}', [BookController::class, 'edit'])->middleware('auth')->name('book-edit');
     Route::post('/edit/{id}', [BookController::class, 'update'])->name('book-update');
     Route::get('delete/{id}', [BookController::class, 'destroy'])->name('book-delete');

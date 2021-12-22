@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BookRequest;
+use App\Models\Comment;
 use Illuminate\Support\Str;
 
 class BookController extends Controller
@@ -52,7 +54,9 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::where('id', $id)->first();
-        return view('view', ['book' => $book]);
+        // $comment = Comment::where('book_id', $id)->get();
+        $rating = $book->comments()->avg('rating');
+        return view('view', ['book' => $book, 'comments' => $book->comments, 'rating' => $rating]);
     }
 
     /**

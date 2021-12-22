@@ -12,20 +12,19 @@ class CreateBooksTable extends Migration
      * @return void
      */
     public function up()
-    { {
-            if (!Schema::hasTable('books')) {
-                Schema::create('books', function (Blueprint $table) {
-                    $table->id();
-                    $table->bigInteger('author_id')->unsigned();
-                    $table->string('title');
-                    $table->string('slug');
-                    $table->text('photo');
-                    $table->integer('page')->unsigned();
-                    $table->decimal('rating', 2, 1)->default(5.0);
-                    $table->text('content');
-                    $table->timestamps();
-                });
-            }
+    {
+        if (!Schema::hasTable('books')) {
+            Schema::create('books', function (Blueprint $table) {
+                $table->id();
+                $table->bigInteger('author_id')->unsigned();
+                $table->string('title');
+                $table->string('slug')->unique();
+                $table->text('photo');
+                $table->integer('page')->unsigned();
+                $table->decimal('rating', 2, 1)->default(5.0);
+                $table->text('content');
+                $table->timestamps();
+            });
         }
     }
 

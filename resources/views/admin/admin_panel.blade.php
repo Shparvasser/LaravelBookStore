@@ -10,20 +10,19 @@
     <th>Author:</th>
     <th>Title:</th>
     <th>Created-at:</th>
-    <th>Edit:</th>
-    <th>Delete:</th>
+    <th>Updated-at:</th>
+    <th>Action:</th>
     @foreach ($books as $book)
         <tr>
             <td>{{$book->user->name}}</td>
             <td>{{$book->title}}</td>
             <td>{{$book->created_at}}</td>
-            <td>
-                <form action="{{route('book-edit',[$book->id])}}">
+            <td>{{$book->updated_at}}</td>
+            <td class="d-flex justify-content-between">
+                <form action="{{route('book-edit',[$book->slug])}}">
                     <button class="btn btn-sm btn-outline-secondary">Edit</button>
                 </form>
-            </td>
-            <td>
-                <form action="{{route('book-delete',[$book->id])}}">
+                <form action="{{route('book-delete',[$book->slug])}}">
                     <button class="btn btn-sm btn-outline-secondary">Delete</button>
                 </form>
             </td>

@@ -26,7 +26,7 @@
                 <div class="py-2">{{$book->created_at}}</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <form action="{{route('book-show',[$book->id,$book->slug])}}">
+                        <form action="{{route('book-show',[$book->slug])}}">
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
                     </div>

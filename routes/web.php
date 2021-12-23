@@ -44,7 +44,7 @@ Route::get('/logout', function () {
 Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
-Route::get('/view/{id}/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
+Route::get('/view/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
 Route::post('/view/{id}/{slug}', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
 
 

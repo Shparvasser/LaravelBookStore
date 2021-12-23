@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BookRequest;
-use App\Models\Comment;
-use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -16,13 +13,14 @@ class BookController extends Controller
     {
         return view('book', ['categories' => Category::get()]);
     }
+
     public function create(BookRequest $req)
     {
         $file = $req->file('photo')->store('uploads', 'public');
         $book = new Book();
         $book->author_id = $req->user()->id;
         $book->title = $req->input('title');
-        $book->slug = Str::slug($book->title, '-');
+        $book->slug = $book->setTitleAtribute($book->title);
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');
@@ -30,7 +28,6 @@ class BookController extends Controller
         if ($req->input('categories')) {
             $book->categories()->attach($req->input('categories'));
         }
-
         return redirect()->route('home');
     }
 
@@ -51,10 +48,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $book = Book::where('id', $id)->first();
-        // $comment = Comment::where('book_id', $id)->get();
+        $book = Book::where('slug', $slug)->first();
         $rating = $book->comments()->avg('rating');
         return view('view', ['book' => $book, 'comments' => $book->comments, 'rating' => $rating]);
     }
@@ -65,9 +61,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $book = Book::where('id', $id)->first();
+        $book = Book::where('slug', $slug)->first();
         return view('edit', ['book' => $book, 'categories' => Category::get()]);
     }
 
@@ -78,13 +74,12 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $req)
+    public function update($slug, BookRequest $req)
     {
         $file = $req->file('photo')->store('uploads', 'public');
-        $book = Book::find($id);
-        $book->author_id = $req->user()->id;
+        $book = Book::where('slug', $slug)->first();
         $book->title = $req->input('title');
-        $book->slug = Str::slug($book->title, '-');
+        $book->slug = $book->setTitleAtribute($book->title);
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');
@@ -101,9 +96,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        Book::find($id)->delete();
+        Book::where('slug', $slug)->delete();
         return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
     }
 }

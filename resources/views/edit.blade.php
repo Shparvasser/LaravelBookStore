@@ -5,7 +5,7 @@
 @section('content')
 <h1>Edit book-{{$book->id}}</h1>
 
-<form enctype="multipart/form-data" action="{{route('book-update',$book->id)}}" method="post">
+<form enctype="multipart/form-data" action="{{route('book-update',$book->slug)}}" method="post">
     @csrf
     <div class="form-group mb-3">
         <label for="title">Enter title</label>

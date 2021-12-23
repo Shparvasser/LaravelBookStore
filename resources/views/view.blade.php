@@ -13,7 +13,7 @@
             </div>
             <img style="width: 250px; hight: 250px"class="img-fluid card shadow-sm rounded mx-auto d-block" src="/storage/{{$book->photo}}" alt="Sorry:(">
             <div class="card-body">{{$book->content}}</div>
-            <div class="py-2">Total rating:{{$rating}}</div>
+            {{-- <div class="py-2">Total rating:{{$rating}}</div> --}}
         </div>
     </div>
 </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="d-flex justify-content-between">
             <div>Author: {{$comment->user->name}}</div>
-            <div>Rating: {{$comment->rating}}</div>
+            {{-- <div>Rating: {{$comment->rating}}</div> --}}
         </div>
     </div>
 </div>

@@ -51,8 +51,8 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = Book::where('slug', $slug)->first();
-        $rating = $book->comments()->avg('rating');
-        return view('view', ['book' => $book, 'comments' => $book->comments, 'rating' => $rating]);
+        // $rating = $book->comments()->avg('rating')'rating' => $rating;
+        return view('view', ['book' => $book, 'comments' => $book->comments]);
     }
 
     /**

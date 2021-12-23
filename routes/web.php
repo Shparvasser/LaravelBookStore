@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ViewController;
 use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ViewController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,8 @@ Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
 Route::get('/view/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
-Route::post('/view/{id}/{slug}', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
+Route::post('/view/{id}/{slug}/comment', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
+Route::post('/view/{id}/{slug}/rating', [RatingController::class, 'ratingOn'])->middleware('auth')->name('book-rating');
 
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {

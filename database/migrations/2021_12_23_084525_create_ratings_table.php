@@ -15,6 +15,7 @@ class CreateRatingsTable extends Migration
     {
         if (!Schema::hasTable('ratings')) {
             Schema::create('ratings', function (Blueprint $table) {
+                $table->id();
                 $table->bigInteger('book_id')->unsigned();
                 $table->bigInteger('author_id')->unsigned();
                 $table->decimal('rating', 2, 1);
@@ -39,6 +40,7 @@ class CreateRatingsTable extends Migration
         Schema::table('ratings', function (Blueprint $table) {
             $table->dropForeign('ratings_author_id_foreign');
             $table->dropForeign('ratings_book_id_foreign');
+            $table->dropUnique('atings_book_id_author_id_unique');
         });
     }
 }

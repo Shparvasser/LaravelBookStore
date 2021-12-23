@@ -40,14 +40,22 @@
 @section('aside')
     @parent
 <p>Lorem, ipsum.</p>
-<form action="{{route('book-comment',[$book->id,$book->slug])}}" method="post">
+<form class="mb-3" action="{{route('book-comment',[$book->id,$book->slug])}}" method="post">
     @csrf
     <div class="form-group mb-3">
         <label for="comment">Comment:</label>
         <textarea class="form-control mb-2" name="comment" id="comment" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Send comment</button>
+</form>
+<form action="{{route('book-rating',[$book->id,$book->slug])}}" method="post">
+    @csrf
+    <div class="form-group mb-3">
+        <input type="hidden" name='author_id' value="{{$user}}">
+        <input type="hidden" name='book_id' value="{{$book->id}}">
         <label for="rating">Rating:</label>
         <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
     </div>
-    <button type="submit" class="btn btn-success">Send</button>
+    <button type="submit" class="btn btn-success">Send rating</button>
 </form>
 @endsection

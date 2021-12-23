@@ -21,6 +21,10 @@ class Book extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
     public function setTitleAtribute($title)
     {
         $this->attributes['slug'] = $this->uniqueSlug($title);

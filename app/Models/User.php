@@ -49,7 +49,11 @@ class User extends Authenticatable
     }
     public function comments()
     {
-        return $this->hasMany(Commetn::class);
+        return $this->hasMany(Comment::class);
+    }
+    public function ratings()
+    {
+        return $this->hasOne(Rating::class);
     }
     public function setPasswordAttribute($password)
     {

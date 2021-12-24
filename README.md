@@ -64,3 +64,14 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+--MIGRATION--
+
+You need to do this action first 
+
+In termenal:
+1) php artisan permission:create-role user web
+2) php artisan permission:create-role admin web
+
+When creating a user, according to the standard, he is given the role of "user" for the administrator, you need to manually change the role in the table 

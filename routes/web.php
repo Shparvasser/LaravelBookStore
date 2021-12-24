@@ -1,15 +1,12 @@
 <?php
 
-use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ViewController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RatingController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AdminController;
 
@@ -46,8 +43,9 @@ Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
 Route::get('/view/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
-Route::post('/view/{id}/{slug}/review', [CommentController::class, 'review'])->middleware('auth')->name('book-review');
+Route::post('/view/{id}/{slug}/review', [ReviewController::class, 'review'])->middleware('auth')->name('book-review');
 
+Route::get('/category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin-panel');

@@ -52,11 +52,11 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = Book::where('slug', $slug)->first();
-        // $rating = $book->ratings()->avg('rating')'rating' => $rating;
+        $rating = $book->reviews()->avg('rating');
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
-        return view('view', ['book' => $book, 'reviews' => $book->reviews, 'user' => $user]);
+        return view('view', ['book' => $book, 'reviews' => $book->reviews, 'user' => $user, 'rating' => $rating]);
     }
 
     /**
@@ -104,5 +104,13 @@ class BookController extends Controller
     {
         Book::where('slug', $slug)->delete();
         return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
+    }
+
+    public function getBookByCategory($id)
+    {
+        $categories = Category::orderBy('title')->get();
+        $currentCategory = Category::where('id', $id)
+            ->first();
+        return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);
     }
 }

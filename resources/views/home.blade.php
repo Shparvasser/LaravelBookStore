@@ -7,11 +7,9 @@
 
 <h1>Main page</h1>
 <div class="mb-4" role="group" aria-label="Basic outlined example">
-    <a href="#" class="btn btn-outline-primary active">Category 1</a>
-    <a href="#" class="btn btn-outline-primary">Category 2</a>
-    <a href="#" class="btn btn-outline-primary">Category 3</a>
-    <a href="#" class="btn btn-outline-primary">Category 4</a>
-    <a href="#" class="btn btn-outline-primary">Category 5</a>
+    @foreach ($categories as $category)
+        <a href="{{route('getBookByCategory',[$category->id])}}" class="btn btn-outline-primary">{{$category->title}}</a>
+    @endforeach
 </div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach ($books as $book)
@@ -20,7 +18,7 @@
                 <div class="card-header">
                     <h4 class="text-center fw-normal">{{$book->title}}</h4>
                 </div>
-                <img class="img-fluid" src="storage/{{$book->photo}}" alt="Sorry:(">
+                <img class="img-fluid" src="{{asset($book->photo)}}" alt="Sorry:(">
                 <div class="">Pages:{{$book->page}}</div>
                 <div class="">Author:{{$book->user->name}}</div>
                 <div class="py-2">{{$book->created_at}}</div>
@@ -30,7 +28,9 @@
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
                     </div>
-                    <div>Rating:{{$book->rating}}</div>
+                    <div>
+                        Total Rating:{{$book->reviews()->avg('rating')}}
+                    </div>
                 </div>
             </div>
         </div>

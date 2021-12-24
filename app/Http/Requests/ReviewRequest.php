@@ -24,16 +24,9 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'comments' => 'required|min:20|max:500',
-            // 'author_id' => 'unique_with:ratings,book_id',
+            'comment' => 'required|min:20|max:500',
             'rating' => 'required',
-            // 'author_id' =>  Rule::unique('ratings')->where(function ($query) {
-            //     return $query->where('author_id', $this->request->get('author_id'));
-            // })
-            // 'book_id' => Rule::unique('ratings', 'book_id')->where(function ($query) {
-            //     return $query->where('author_id', $this->request->get('author_id'));
-            // })
-            'book_id' => 'unique_with:ratings,author_id',
+            'book_id' => 'required',
             'author_id' => 'required'
         ];
     }

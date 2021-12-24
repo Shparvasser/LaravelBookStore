@@ -56,7 +56,7 @@ class BookController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
-        return view('view', ['book' => $book, 'comments' => $book->comments, 'user' => $user]);
+        return view('view', ['book' => $book, 'reviews' => $book->reviews, 'user' => $user]);
     }
 
     /**

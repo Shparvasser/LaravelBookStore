@@ -46,8 +46,7 @@ Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
 Route::get('/view/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
-Route::post('/view/{id}/{slug}/comment', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
-Route::post('/view/{id}/{slug}/rating', [RatingController::class, 'ratingOn'])->middleware('auth')->name('book-rating');
+Route::post('/view/{id}/{slug}/review', [CommentController::class, 'review'])->middleware('auth')->name('book-review');
 
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {

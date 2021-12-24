@@ -47,14 +47,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Book::class);
     }
-    public function comments()
+
+    public function reviews()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Review::class);
     }
-    public function ratings()
-    {
-        return $this->hasOne(Rating::class);
-    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);

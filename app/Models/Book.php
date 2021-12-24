@@ -13,23 +13,23 @@ class Book extends Model
     {
         return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
-    public function comments()
+
+    public function raviews()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Raview::class);
     }
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
+
     public function setTitleAtribute($title)
     {
         $this->attributes['slug'] = $this->uniqueSlug($title);
         return $this->attributes['slug'];
     }
+
     public function uniqueSlug($title)
     {
         $slug = Str::slug($title, '-');

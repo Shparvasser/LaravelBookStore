@@ -11,8 +11,8 @@ class HomeController extends Controller
     {
         $categories = Category::orderBy('title')->get();
         $book = new Book();
-        $rating = $book->reviews()->avg('rating');
+        // $rating = $book->reviews()->avg('rating')'rating' => $rating;
         $books = $book->all();
-        return view('home', ['books' => $books, 'categories' => $categories, 'rating' => $rating]);
+        return view('home', ['books' => $books, 'categories' => $categories]);
     }
 }

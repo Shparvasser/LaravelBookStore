@@ -28,9 +28,9 @@
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
                     </div>
-                    <div>
+                    {{-- <div>
                         Total Rating:{{$book->reviews()->avg('rating')}}
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

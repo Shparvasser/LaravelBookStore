@@ -13,42 +13,49 @@
             </div>
             <img style="width: 250px; hight: 250px"class="img-fluid card shadow-sm rounded mx-auto d-block" src="/storage/{{$book->photo}}" alt="Sorry:(">
             <div class="card-body">{{$book->content}}</div>
-            <div class="py-2">Total rating:{{$rating}}</div>
+            {{-- <div class="py-2">Total rating:{{$rating}}</div> --}}
         </div>
     </div>
 </div>
-    @if ($reviews)
-        @foreach ($reviews as $review)
-        <div class="card col mb-4">
-            <div class="">
-                <div class="card-header">
-                <h4 class="text-center fw-normal">Review</h4>
-            </div>
-            <div class="card-body">
-                <div>{{$review->comment}}</div>
-            </div>
-            <div class="d-flex justify-content-between">
-                <div>Author: {{$review->user->name}}</div>
-                <div>Rating: {{$review->rating}}</div>
-            </div>
+
+    @foreach ($comments as $comment)
+    <div class="card col mb-4">
+    <div class="">
+        <div class="card-header">
+            <h4 class="text-center fw-normal">Comment</h4>
         </div>
-        @endforeach
-    @endif
+        <div class="card-body">
+            <div>{{$comment->comment}}</div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>Author: {{$comment->user->name}}</div>
+            {{-- <div>Rating: {{$comment->rating}}</div> --}}
+        </div>
+    </div>
+</div>
+    @endforeach
+
 @endsection
 
 @section('aside')
     @parent
-    <p>Lorem, ipsum.</p>
-    <form class="mb-3" action="{{route('book-review',[$book->id,$book->slug])}}" method="post">
-        @csrf
-        <div class="form-group mb-3">
-            <input type="hidden" name='author_id' value="{{$user}}">
-            <input type="hidden" name='book_id' value="{{$book->id}}">
-            <label for="comment">Comment:</label>
-            <textarea class="form-control mb-2" name="comment" id="comment" rows="3"></textarea>
-            <label for="rating">Rating:</label>
-            <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
-        </div>
-        <button type="submit" class="btn btn-success">Send review</button>
-    </form>
+<p>Lorem, ipsum.</p>
+<form class="mb-3" action="{{route('book-comment',[$book->id,$book->slug])}}" method="post">
+    @csrf
+    <div class="form-group mb-3">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control mb-2" name="comment" id="comment" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Send comment</button>
+</form>
+<form action="{{route('book-rating',[$book->id,$book->slug])}}" method="post">
+    @csrf
+    <div class="form-group mb-3">
+        <input type="hidden" name='author_id' value="{{$user}}">
+        <input type="hidden" name='book_id' value="{{$book->id}}">
+        <label for="rating">Rating:</label>
+        <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
+    </div>
+    <button type="submit" class="btn btn-success">Send rating</button>
+</form>
 @endsection

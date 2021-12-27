@@ -52,11 +52,11 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = Book::where('slug', $slug)->first();
-        $rating = $book->reviews()->avg('rating');
+        // $rating = $book->reviews()->avg('rating')'rating' => $rating;
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
-        return view('view', ['book' => $book, 'reviews' => $book->reviews, 'user' => $user, 'rating' => $rating]);
+        return view('view', ['book' => $book, 'comments' => $book->comments, 'user' => $user]);
     }
 
     /**

@@ -13,7 +13,10 @@
             </div>
             <img style="width: 250px; hight: 250px"class="img-fluid card shadow-sm rounded mx-auto d-block" src="/storage/{{$book->photo}}" alt="Sorry:(">
             <div class="card-body">{{$book->content}}</div>
-            {{-- <div class="py-2">Total rating:{{$rating}}</div> --}}
+            @if ($ratings)
+                <div class="py-2">Rating:{{$ratings}}</div>
+                @else <div class="py-2">This book is not currently rated</div>
+            @endif
         </div>
     </div>
 </div>
@@ -29,7 +32,6 @@
         </div>
         <div class="d-flex justify-content-between">
             <div>Author: {{$comment->user->name}}</div>
-            {{-- <div>Rating: {{$comment->rating}}</div> --}}
         </div>
     </div>
 </div>
@@ -40,7 +42,7 @@
 @section('aside')
     @parent
 <p>Lorem, ipsum.</p>
-<form class="mb-3" action="{{route('book-comment',[$book->id,$book->slug])}}" method="post">
+<form class="mb-3" action="{{route('book-comment',[$book->slug])}}" method="post">
     @csrf
     <div class="form-group mb-3">
         <label for="comment">Comment:</label>
@@ -48,11 +50,11 @@
     </div>
     <button type="submit" class="btn btn-success">Send comment</button>
 </form>
-<form action="{{route('book-rating',[$book->id,$book->slug])}}" method="post">
+<form action="{{route('book-rating',[$book->slug])}}" method="post">
     @csrf
     <div class="form-group mb-3">
-        <input type="hidden" name='author_id' value="{{$user}}">
-        <input type="hidden" name='book_id' value="{{$book->id}}">
+        <input type="hidden" name='author_id' id="author_id" value="{{$user}}" readonly>
+        <input type="hidden" name='book_id' id="book_id" value="{{$book->id}}" readonly>
         <label for="rating">Rating:</label>
         <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
     </div>

@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
@@ -52,11 +53,13 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = Book::where('slug', $slug)->first();
-        // $rating = $book->reviews()->avg('rating')'rating' => $rating;
+        $rating = new Rating();
+        $ratings = $rating->where('book_id', $book->id)->avg('rating');
+        $ratings = round($ratings, 2);
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
-        return view('view', ['book' => $book, 'comments' => $book->comments, 'user' => $user]);
+        return view('view', ['book' => $book, 'comments' => $book->comments, 'user' => $user, 'ratings' => $ratings]);
     }
 
     /**

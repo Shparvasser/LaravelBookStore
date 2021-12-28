@@ -28,9 +28,11 @@
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
                     </div>
-                    {{-- <div>
-                        Total Rating:{{$book->reviews()->avg('rating')}}
-                    </div> --}}
+                        @if ($book->avarageRating)
+                            <div>Rating: {{$book->avarageRating}}</div>
+                        @else
+                            <div class="py-2">This book is not currently rated</div>
+                        @endif
                 </div>
             </div>
         </div>

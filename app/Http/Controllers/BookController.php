@@ -30,6 +30,7 @@ class BookController extends Controller
         if ($req->input('categories')) {
             $book->categories()->attach($req->input('categories'));
         }
+
         return redirect()->route('home');
     }
 
@@ -59,7 +60,16 @@ class BookController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
-        return view('view', ['book' => $book, 'comments' => $book->comments, 'user' => $user, 'ratings' => $ratings]);
+
+        return view(
+            'view',
+            [
+                'book' => $book,
+                'comments' => $book->comments,
+                'user' => $user,
+                'ratings' => $ratings
+            ]
+        );
     }
 
     /**
@@ -71,6 +81,7 @@ class BookController extends Controller
     public function edit($slug)
     {
         $book = Book::where('slug', $slug)->first();
+
         return view('edit', ['book' => $book, 'categories' => Category::get()]);
     }
 
@@ -94,6 +105,7 @@ class BookController extends Controller
         if ($req->input('categories')) {
             $book->categories()->sync($req->input('categories'));
         }
+
         return redirect()->route('admin-panel')->with('success', 'The book has been updated');
     }
 
@@ -106,6 +118,7 @@ class BookController extends Controller
     public function destroy($slug)
     {
         Book::where('slug', $slug)->delete();
+
         return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
     }
 
@@ -114,6 +127,7 @@ class BookController extends Controller
         $categories = Category::orderBy('title')->get();
         $currentCategory = Category::where('id', $id)
             ->first();
+
         return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);
     }
 }

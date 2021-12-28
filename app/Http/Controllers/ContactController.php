@@ -14,6 +14,7 @@ class ContactController extends Controller
         if (Auth::check()) {
             return redirect()->route('account');
         }
+
         return view('contact');
     }
     public function submit(ContactRequest $req)
@@ -28,11 +29,13 @@ class ContactController extends Controller
         $user->assignRole('user');
         $user->save();
         Auth::login($user);
+
         return redirect()->route('account')->with('success', 'Welcom to our office');
     }
     public function getUser(Request $req)
     {
         $user = $req->user();
+
         return view('account', ['user' => $user]);
     }
 }

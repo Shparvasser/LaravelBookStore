@@ -19,6 +19,7 @@ class CommentController extends Controller
         $comment->book_id = $bookId->id;
         $comment->comment = $req->input('comment');
         $comment->save();
+
         return redirect()->route('home')->with('success', 'Your comment added');
     }
 }

@@ -12,6 +12,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             return redirect()->route('account');
         }
+
         return view('login');
     }
     public function login(LoginRequest $req)
@@ -24,6 +25,7 @@ class LoginController extends Controller
         if (Auth::attempt($formFailds)) {
             return redirect(route('account'));
         }
+
         return redirect(route('login'))->withErrors([
             'email' => 'Dont correct email or password'
         ]);

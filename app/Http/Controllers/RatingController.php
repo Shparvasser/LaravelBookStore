@@ -16,6 +16,7 @@ class RatingController extends Controller
         $rating->author_id = $req->input('author_id');
         $rating->rating = $req->input('rating');
         $rating->save();
+
         return redirect()->route('home')->with('success', 'Your rating added');
     }
 }

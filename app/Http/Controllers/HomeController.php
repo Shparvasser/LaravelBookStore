@@ -25,7 +25,6 @@ class HomeController extends Controller
             $book->avarageRating = $round;
         }
 
-
         return view('home', ['books' => $books, 'categories' => $categories]);
     }
 }

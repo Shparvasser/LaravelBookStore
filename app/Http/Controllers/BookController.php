@@ -8,13 +8,13 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Interfaces\IBookRepository;
+use App\Repositories\Interfaces\BookRepositoryInterface;
 
 class BookController extends Controller
 {
     private $bookRepository;
 
-    public function __construct(IBookRepository $bookRepository)
+    public function __construct(BookRepositoryInterface $bookRepository)
     {
         $this->bookRepository = $bookRepository;
     }
@@ -45,9 +45,7 @@ class BookController extends Controller
         $book->page = $req->input('page');
         $book->content = $req->input('content');
         $book->save();
-        if ($req->input('categories')) {
-            $book->categories()->attach($req->input('categories'));
-        }
+        $this->bookRepository->checkCategory($book, $req->input('categories'));
 
         return redirect()->route('home');
     }

@@ -23,8 +23,6 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $books = $this->bookRepository->all();
-        dd($books);
         $categories = Category::orderBy('title')->get();
         $book = new Book();
         $books = $book

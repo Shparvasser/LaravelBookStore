@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Book;
+use App\Repositories\Interfaces\BookRepositoryInterface;
 
 class AdminController extends Controller
 {
+    private $bookRepository;
+
+    function __construct(BookRepositoryInterface $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +22,7 @@ class AdminController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $book = new Book();
-        $books = $book->all();
+        $books = $this->bookRepository->all();
 
         return view('admin.admin_panel', ['books' => $books]);
     }

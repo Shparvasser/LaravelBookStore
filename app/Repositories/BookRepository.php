@@ -15,11 +15,16 @@ class BookRepository implements BookRepositoryInterface
     /**
      * all
      *
-     * @return \App\Models\Book
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all(): mixed
+    public function all(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->model::all();
+    }
+
+    public function checkCategory($book, $input)
+    {
+        $book->categories()->attach($input);
     }
 
     public function getByUser(User $user)

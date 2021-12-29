@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use App\Models\Rating;
-use Illuminate\Http\Request;
 use App\Http\Requests\RatingRequest;
 
 class RatingController extends Controller
 {
-    public function ratingOn(RatingRequest $req)
+    /**
+     * ratingOn
+     *
+     * @param  mixed $req
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function ratingOn(RatingRequest $req): mixed
     {
         $rating = new Rating();
         $rating->book_id = $req->input('book_id');

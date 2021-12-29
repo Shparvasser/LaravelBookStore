@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index()
+    /**
+     * index
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         if (Auth::check()) {
             return redirect()->route('account');
@@ -15,7 +20,14 @@ class LoginController extends Controller
 
         return view('login');
     }
-    public function login(LoginRequest $req)
+
+    /**
+     * login
+     *
+     * @param  mixed $req
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function login(LoginRequest $req): mixed
     {
         if (Auth::check()) {
             return redirect(route('account'));

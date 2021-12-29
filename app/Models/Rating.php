@@ -9,11 +9,22 @@ class Rating extends Model
 {
     use HasFactory;
 
-    public function user()
+    /**
+     * user
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
-    public function book()
+
+    /**
+     * book
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function book(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Book::class, 'book_id', 'id');
     }

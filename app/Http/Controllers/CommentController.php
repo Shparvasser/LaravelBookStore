@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
-    public function commentOn(CommentRequest $req, $slug)
+    /**
+     * commentOn
+     *
+     * @param  mixed $req
+     * @param  mixed $slug
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function commentOn(CommentRequest $req, mixed $slug): mixed
     {
         $book = new Book();
         $bookId = $book->where('slug', $slug)->first();

@@ -8,7 +8,12 @@ use App\Models\Category;
 
 class HomeController extends Controller
 {
-    public function index()
+    /**
+     * index
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = Category::orderBy('title')->get();
         $book = new Book();
@@ -21,8 +26,10 @@ class HomeController extends Controller
             ->get()
             ->pluck('rating', 'book_id');
         foreach ($books as $book) {
-            $round = round($ratings[$book->id], 2);
-            $book->avarageRating = $round;
+            if (isset($ratings[$book->id])) {
+                $round = round($ratings[$book->id], 2);
+                $book->avarageRating = $round;
+            }
         }
 
         return view('home', ['books' => $books, 'categories' => $categories]);

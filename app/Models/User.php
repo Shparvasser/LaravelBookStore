@@ -46,25 +46,53 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function books()
+    /**
+     * books
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function books(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Book::class);
     }
 
-    public function reviews()
+    /**
+     * reviews
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Review::class);
     }
-    public function comments()
+
+    /**
+     * comments
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
     }
-    public function ratings()
+
+    /**
+     * ratings
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function ratings(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Rating::class);
     }
 
-    public function setPasswordAttribute($password)
+    /**
+     * setPasswordAttribute
+     *
+     * @param  mixed $password
+     * @return void
+     */
+    public function setPasswordAttribute(mixed $password): void
     {
         $this->attributes['password'] = Hash::make($password);
     }

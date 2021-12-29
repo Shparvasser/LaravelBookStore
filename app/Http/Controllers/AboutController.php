@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
-    public function index()
+    /**
+     * index
+     *
+     * @return Illuminate\Contracts\View\View
+     */
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('about');
     }

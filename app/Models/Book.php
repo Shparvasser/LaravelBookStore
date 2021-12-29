@@ -10,37 +10,72 @@ class Book extends Model
 {
     use HasFactory;
 
-    public function categories()
+    /**
+     * categories
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
     }
 
-    public function user()
+    /**
+     * user
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
-    public function comments()
+    /**
+     * comments
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function ratings()
+    /**
+     * ratings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Rating::class);
     }
 
-    public function setTitleAtribute($title)
+
+    /**
+     * setTitleAttribute
+     *
+     * @param  string $title
+     * @return void
+     */
+    public function setTitleAttribute(string $title): void
     {
+        $this->attributes['title'] = $title;
         $this->attributes['slug'] = $this->uniqueSlug($title);
-        return $this->attributes['slug'];
     }
 
-    public function uniqueSlug($title)
+
+    /**
+     * uniqueSlug
+     *
+     * @param  string $title
+     * @return string
+     */
+    public function uniqueSlug(string $title): string
     {
         $slug = Str::slug($title, '-');
         $count = Book::where('slug', 'LIKE', "{$slug}%")->count();
         $newCount = $count > 0 ? ++$count : '';
+
         return $newCount > 0 ? "$slug-$newCount" : $slug;
     }
 }

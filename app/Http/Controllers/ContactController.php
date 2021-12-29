@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
-    public function index()
+    /**
+     * index
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         if (Auth::check()) {
             return redirect()->route('account');
@@ -17,7 +22,14 @@ class ContactController extends Controller
 
         return view('contact');
     }
-    public function submit(ContactRequest $req)
+
+    /**
+     * submit
+     *
+     * @param  mixed $req
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function submit(ContactRequest $req): mixed
     {
         if (Auth::check()) {
             return redirect()->route('account');
@@ -32,7 +44,14 @@ class ContactController extends Controller
 
         return redirect()->route('account')->with('success', 'Welcom to our office');
     }
-    public function getUser(Request $req)
+
+    /**
+     * getUser
+     *
+     * @param  mixed $req
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function getUser(Request $req): mixed
     {
         $user = $req->user();
 

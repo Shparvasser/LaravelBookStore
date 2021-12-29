@@ -11,18 +11,28 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index()
+    /**
+     * index
+     *
+     * @return Illuminate\Contracts\View\View
+     */
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('book', ['categories' => Category::get()]);
     }
 
-    public function create(BookRequest $req)
+    /**
+     * create
+     *
+     * @param  mixed $req
+     * @return Illuminate\Http\RedirectResponse
+     */
+    public function create(BookRequest $req): \Illuminate\Http\RedirectResponse
     {
         $file = $req->file('photo')->store('uploads', 'public');
         $book = new Book();
         $book->author_id = $req->user()->id;
         $book->title = $req->input('title');
-        $book->slug = $book->setTitleAtribute($book->title);
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');
@@ -48,10 +58,10 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  mixed  $slug
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show($slug)
+    public function show(mixed $slug): mixed
     {
         $book = Book::where('slug', $slug)->first();
         $rating = new Rating();
@@ -75,10 +85,10 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  mixed  $slug
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit($slug)
+    public function edit(mixed $slug): mixed
     {
         $book = Book::where('slug', $slug)->first();
 
@@ -88,16 +98,16 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $req
+     * @param  mixed  $slug
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update($slug, BookRequest $req)
+    public function update(mixed $slug, BookRequest $req): mixed
     {
         $file = $req->file('photo')->store('uploads', 'public');
         $book = Book::where('slug', $slug)->first();
         $book->title = $req->input('title');
-        $book->slug = $book->setTitleAtribute($book->title);
+        $book->slug = $book->setTitleAttribute($book->title);
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');
@@ -112,21 +122,36 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  mixed  $slug
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function destroy($slug)
+    public function destroy(mixed $slug): mixed
     {
         Book::where('slug', $slug)->delete();
 
         return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
     }
 
-    public function getBookByCategory($id)
+    /**
+     * getBookByCategory
+     *
+     * @param  mixed $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function getBookByCategory(int $id): mixed
     {
         $categories = Category::orderBy('title')->get();
         $currentCategory = Category::where('id', $id)
             ->first();
+        $ratings = Rating::query()
+            ->selectRaw('book_id, AVG(rating) as rating')
+            ->groupBy('book_id')
+            ->get()
+            ->pluck('rating', 'book_id');
+        foreach ($currentCategory->books as $book) {
+            $round = round($ratings[$book->id], 2);
+            $book->avarageRating = $round;
+        }
 
         return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);
     }

@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Rating;
 use App\Models\Category;
+use App\Repositories\Interfaces\BookRepositoryInterface;
 
 class HomeController extends Controller
 {
+    private BookRepositoryInterface $bookRepository;
+
+    public function __construct(BookRepositoryInterface $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
     /**
      * index
      *
@@ -15,6 +23,8 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
+        $books = $this->bookRepository->all();
+        dd($books);
         $categories = Category::orderBy('title')->get();
         $book = new Book();
         $books = $book

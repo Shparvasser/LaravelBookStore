@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Rating;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
-use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Interfaces\IBookRepository;
 
 class BookController extends Controller
 {
+    private $bookRepository;
+
+    public function __construct(IBookRepository $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
     /**
      * index
      *
@@ -107,7 +115,6 @@ class BookController extends Controller
         $file = $req->file('photo')->store('uploads', 'public');
         $book = Book::where('slug', $slug)->first();
         $book->title = $req->input('title');
-        $book->slug = $book->setTitleAttribute($book->title);
         $book->photo = $file;
         $book->page = $req->input('page');
         $book->content = $req->input('content');

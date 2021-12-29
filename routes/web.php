@@ -10,7 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Admin\AdminController;
 
 /*
@@ -28,14 +28,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact', [RegistrationController::class, 'index'])->name('contact');
 
-Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact-form');
+Route::post('/contact/submit', [RegistrationController::class, 'submit'])->name('contact-form');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login/submit', [LoginController::class, 'login'])->name('login-form');
 
-Route::get('/account', [ContactController::class, 'getUser'])->middleware('auth')->name('account');
+Route::get('/account', [RegistrationController::class, 'getUser'])->middleware('auth')->name('account');
 
 Route::get('/logout', function () {
     Auth::logout();

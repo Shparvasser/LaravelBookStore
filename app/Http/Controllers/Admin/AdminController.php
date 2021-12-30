@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\BookRepositoryInterface;
+use App\Repositories\Interfaces\IBookRepository;
 
 class AdminController extends Controller
 {
     private $bookRepository;
 
-    function __construct(BookRepositoryInterface $bookRepository)
+    function __construct(IBookRepository $bookRepository)
     {
         $this->bookRepository = $bookRepository;
     }

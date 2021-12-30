@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rating;
 use App\Http\Requests\RatingRequest;
+use App\Repositories\Interfaces\IRatingRepository;
 
 class RatingController extends Controller
 {
+    private $ratingRepository;
+
+    function __construct(IRatingRepository $ratingRepository)
+    {
+        $this->ratingRepository = $ratingRepository;
+    }
     /**
      * ratingOn
      *
@@ -15,11 +21,7 @@ class RatingController extends Controller
      */
     public function ratingOn(RatingRequest $req): mixed
     {
-        $rating = new Rating();
-        $rating->book_id = $req->input('book_id');
-        $rating->author_id = $req->input('author_id');
-        $rating->rating = $req->input('rating');
-        $rating->save();
+        $this->ratingRepository->createRating($req);
 
         return redirect()->route('home')->with('success', 'Your rating added');
     }

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Rating;
 use App\Models\Category;
-use App\Repositories\Interfaces\BookRepositoryInterface;
+use App\Repositories\Interfaces\IBookRepository;
 
 class HomeController extends Controller
 {
-    private BookRepositoryInterface $bookRepository;
+    private $bookRepository;
 
-    public function __construct(BookRepositoryInterface $bookRepository)
+    public function __construct(IBookRepository $bookRepository)
     {
         $this->bookRepository = $bookRepository;
     }

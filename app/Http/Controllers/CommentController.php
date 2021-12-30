@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
+use App\Repositories\Interfaces\IBookRepository;
+use App\Repositories\Interfaces\ICommentRepository;
 
 class CommentController extends Controller
 {
+    private $commentRepository;
+    private $bookRepository;
+
+    function __construct(ICommentRepository $commentRepository, IBookRepository $bookRepository)
+    {
+        $this->commentRepository = $commentRepository;
+        $this->bookRepository = $bookRepository;
+    }
+
     /**
      * commentOn
      *
@@ -17,14 +26,8 @@ class CommentController extends Controller
      */
     public function commentOn(CommentRequest $req, mixed $slug): mixed
     {
-        $book = new Book();
-        $bookId = $book->where('slug', $slug)->first();
-        $bookId->id;
-        $comment = new Comment();
-        $comment->author_id = $req->user()->id;
-        $comment->book_id = $bookId->id;
-        $comment->comment = $req->input('comment');
-        $comment->save();
+        $book = $this->bookRepository->getBookBySlug($slug);
+        $this->commentRepository->createComment($req, $book->id);
 
         return redirect()->route('home')->with('success', 'Your comment added');
     }

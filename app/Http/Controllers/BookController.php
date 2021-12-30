@@ -8,15 +8,18 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Interfaces\BookRepositoryInterface;
+use App\Repositories\Interfaces\IBookRepository;
+use App\Repositories\Interfaces\IRatingRepository;
 
 class BookController extends Controller
 {
     private $bookRepository;
+    private $ratingRepository;
 
-    public function __construct(BookRepositoryInterface $bookRepository)
+    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->ratingRepository = $ratingRepository;
     }
 
     /**
@@ -38,13 +41,7 @@ class BookController extends Controller
     public function create(BookRequest $req): \Illuminate\Http\RedirectResponse
     {
         $file = $req->file('photo')->store('uploads', 'public');
-        $book = new Book();
-        $book->author_id = $req->user()->id;
-        $book->title = $req->input('title');
-        $book->photo = $file;
-        $book->page = $req->input('page');
-        $book->content = $req->input('content');
-        $book->save();
+        $book = $this->bookRepository->createBook($req, $file);
         $this->bookRepository->checkCategory($book, $req->input('categories'));
 
         return redirect()->route('home');
@@ -69,10 +66,8 @@ class BookController extends Controller
      */
     public function show(mixed $slug): mixed
     {
-        $book = Book::where('slug', $slug)->first();
-        $rating = new Rating();
-        $ratings = $rating->where('book_id', $book->id)->avg('rating');
-        $ratings = round($ratings, 2);
+        $book = $this->bookRepository->getBookBySlug($slug);
+        $ratings = $this->ratingRepository->averageRating($book->id);
         if (Auth::check()) {
             $user = Auth::user()->id;
         }
@@ -96,7 +91,7 @@ class BookController extends Controller
      */
     public function edit(mixed $slug): mixed
     {
-        $book = Book::where('slug', $slug)->first();
+        $book = $this->bookRepository->getBookBySlug($slug);
 
         return view('edit', ['book' => $book, 'categories' => Category::get()]);
     }
@@ -111,15 +106,9 @@ class BookController extends Controller
     public function update(mixed $slug, BookRequest $req): mixed
     {
         $file = $req->file('photo')->store('uploads', 'public');
-        $book = Book::where('slug', $slug)->first();
-        $book->title = $req->input('title');
-        $book->photo = $file;
-        $book->page = $req->input('page');
-        $book->content = $req->input('content');
-        $book->save();
-        if ($req->input('categories')) {
-            $book->categories()->sync($req->input('categories'));
-        }
+        $book = $this->bookRepository->getBookBySlug($slug);
+        $this->bookRepository->updateBook($req, $file, $book);
+        $this->bookRepository->updateCategory($book, $req->input('categories'));
 
         return redirect()->route('admin-panel')->with('success', 'The book has been updated');
     }
@@ -132,7 +121,7 @@ class BookController extends Controller
      */
     public function destroy(mixed $slug): mixed
     {
-        Book::where('slug', $slug)->delete();
+        $this->bookRepository->deleteBook($slug);
 
         return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
     }

@@ -104,4 +104,14 @@ class BookRepository implements IBookRepository
         $book->content = $req->input('content');
         $book->save();
     }
+
+    /**
+     * withUser
+     *
+     * @return mixed
+     */
+    public function withUser(): mixed
+    {
+        return $this->model::with('user')->get();
+    }
 }

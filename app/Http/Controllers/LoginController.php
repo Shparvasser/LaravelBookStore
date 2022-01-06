@@ -33,7 +33,6 @@ class LoginController extends Controller
             return redirect(route('account'));
         }
         $formFailds = $req->only(['email', 'password']);
-
         if (Auth::attempt($formFailds)) {
             return redirect(route('account'));
         }

@@ -12,6 +12,8 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,13 @@ Route::get('/category/{id}', [BookController::class, 'getBookByCategory'])->name
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin-panel');
-    Route::get('/edit/{id}', [BookController::class, 'edit'])->middleware('auth')->name('book-edit');
-    Route::post('/edit/{id}', [BookController::class, 'update'])->name('book-update');
-    Route::get('delete/{id}', [BookController::class, 'destroy'])->name('book-delete');
+    Route::get('/books', [AdminController::class, 'showBooks'])->name('admin-books');
+    Route::get('/categories', [AdminController::class, 'showCategories'])->name('admin-categories');
+    Route::get('/edit/{id}/book', [BookController::class, 'edit'])->name('book-edit');
+    Route::get('/delete/{id}/book', [BookController::class, 'destroy'])->name('book-delete');
+    Route::get('/edit/{id}/category', [CategoryController::class, 'edit'])->name('category-edit');
+    Route::get('/delete/{id}/category', [CategoryController::class, 'destroy'])->name('category-delete');
+    Route::post('/edit/{id}/book', [BookController::class, 'update'])->name('book-update');
+    Route::post('/create/category', [CategoryController::class, 'create'])->name('category-create');
+    Route::post('/edit/{id}/category', [CategoryController::class, 'update'])->name('category-update');
 });

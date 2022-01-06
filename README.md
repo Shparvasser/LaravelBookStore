@@ -65,6 +65,24 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+--PHP VERSION--
+
+php >=8.0.12
+
+--SERVER--
+apache
+
+--DB--
+mysql
+
+--COMPOSER--
+
+1)git clone this project
+2)composer install
+
+--BRANCHES--
+
+main branch - It's branch for staging, we merge all feature branches in master.
 
 --MIGRATION--
 
@@ -75,3 +93,7 @@ In termenal:
 2) php artisan permission:create-role admin web
 
 When creating a user, according to the standard, he is given the role of "user" for the administrator, you need to manually change the role in the table 
+
+--DB SEED--
+
+Now doesnt working!!!

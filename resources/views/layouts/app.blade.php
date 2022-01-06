@@ -9,7 +9,11 @@
 </head>
 
 <body>
-    @include('inc.header')
+    @if (Auth::check())
+        @include('inc.headerAuth')
+    @else
+        @include('inc.header')
+    @endif
     <div class="container mt-5">
         @include('inc.messages')
         <div class="row">

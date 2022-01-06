@@ -6,6 +6,8 @@ use App\Repositories\BookRepository;
 use App\Repositories\RatingRepository;
 use App\Repositories\CommentRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\CategoryRepository;
+use App\Repositories\UserRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\Interfaces\ICommentRepository::class,
             CommentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Interfaces\ICategoryRepository::class,
+            CategoryRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Interfaces\IUserRepository::class,
+            UserRepository::class
         );
     }
 

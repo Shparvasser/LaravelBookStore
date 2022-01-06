@@ -6,6 +6,8 @@
 @section('content')
 
 <h1>Admin page</h1>
+<a class="list-group-item list-group-item-action" href="{{route('admin-books')}}">Books</a>
+<a class="list-group-item list-group-item-action" href="{{route('admin-categories')}}">Categories</a>
 <table class="table">
     <th>Author:</th>
     <th>Title:</th>

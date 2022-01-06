@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Rating;
-use App\Models\Category;
 use App\Repositories\Interfaces\IBookRepository;
+use App\Repositories\Interfaces\ICategoryRepository;
+use App\Repositories\Interfaces\IRatingRepository;
 
 class HomeController extends Controller
 {
     private $bookRepository;
+    private $ratingRepository;
+    private $categoryRepository;
 
-    public function __construct(IBookRepository $bookRepository)
+    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository, ICategoryRepository $categoryRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->ratingRepository = $ratingRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -23,16 +26,9 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $categories = Category::orderBy('title')->get();
-        $book = new Book();
-        $books = $book
-            ->with('user')
-            ->get();
-        $ratings = Rating::query()
-            ->selectRaw('book_id, AVG(rating) as rating')
-            ->groupBy('book_id')
-            ->get()
-            ->pluck('rating', 'book_id');
+        $categories = $this->categoryRepository->orderByTitle();
+        $books = $this->bookRepository->withUser();
+        $ratings = $this->ratingRepository->getQueryRating();
         foreach ($books as $book) {
             if (isset($ratings[$book->id])) {
                 $round = round($ratings[$book->id], 2);

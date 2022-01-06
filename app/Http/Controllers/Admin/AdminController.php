@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\IBookRepository;
+use App\Repositories\Interfaces\ICategoryRepository;
 
 class AdminController extends Controller
 {
     private $bookRepository;
+    private $categoryRepository;
 
-    function __construct(IBookRepository $bookRepository)
+    function __construct(IBookRepository $bookRepository, ICategoryRepository $categoryRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
@@ -21,74 +23,30 @@ class AdminController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
+        return view('admin.panel');
+    }
+
+    /**
+     * showBooks
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function showBooks(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+    {
         $books = $this->bookRepository->all();
 
-        return view('admin.admin_panel', ['books' => $books]);
+        return view('admin.panel-books', ['books' => $books]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * showCategories
      *
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Contracts\View\View
      */
-    public function create()
+    public function showCategories(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        //
-    }
+        $categories = $this->categoryRepository->all();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('admin.panel-categories', ['categories' => $categories]);
     }
 }

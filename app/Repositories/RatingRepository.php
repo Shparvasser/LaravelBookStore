@@ -38,4 +38,13 @@ class RatingRepository implements IRatingRepository
         $rating->rating = $req->input('rating');
         $rating->save();
     }
+
+    public function getQueryRating()
+    {
+        return $this->model::query()
+            ->selectRaw('book_id, AVG(rating) as rating')
+            ->groupBy('book_id')
+            ->get()
+            ->pluck('rating', 'book_id');
+    }
 }

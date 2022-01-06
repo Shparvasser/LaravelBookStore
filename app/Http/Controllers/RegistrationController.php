@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
-use App\Models\User;
+use App\Repositories\Interfaces\IUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
-
+    private $userRepository;
+    public function __construct(IUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     /**
      * index
      *
@@ -35,12 +39,7 @@ class RegistrationController extends Controller
         if (Auth::check()) {
             return redirect()->route('account');
         }
-        $user = new User();
-        $user->name = $req->input('name');
-        $user->email = $req->input('email');
-        $user->password = $req->input('password');
-        $user->assignRole('user');
-        $user->save();
+        $user = $this->userRepository->registration($req);
         Auth::login($user);
 
         return redirect()->route('account')->with('success', 'Welcom to our office');

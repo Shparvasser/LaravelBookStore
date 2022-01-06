@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Rating;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Service\ImageService;
 use App\Http\Requests\BookRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\IBookRepository;
 use App\Repositories\Interfaces\IRatingRepository;
+use App\Repositories\Interfaces\ICategoryRepository;
 
 class BookController extends Controller
 {
     private $bookRepository;
     private $ratingRepository;
+    private $categoryRepository;
+    private $imageService;
 
-    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository)
+    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository, ICategoryRepository $categoryRepository, ImageService $imageService)
     {
         $this->bookRepository = $bookRepository;
         $this->ratingRepository = $ratingRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -40,7 +44,7 @@ class BookController extends Controller
      */
     public function create(BookRequest $req): \Illuminate\Http\RedirectResponse
     {
-        $file = $req->file('photo')->store('uploads', 'public');
+        $file = $this->imageService->saveImage($req);
         $book = $this->bookRepository->createBook($req, $file);
         $this->bookRepository->checkCategory($book, $req->input('categories'));
 
@@ -92,8 +96,9 @@ class BookController extends Controller
     public function edit(mixed $slug): mixed
     {
         $book = $this->bookRepository->getBookBySlug($slug);
+        $categories = $this->categoryRepository->all();
 
-        return view('edit', ['book' => $book, 'categories' => Category::get()]);
+        return view('edit', ['book' => $book, 'categories' => $categories]);
     }
 
     /**
@@ -105,7 +110,7 @@ class BookController extends Controller
      */
     public function update(mixed $slug, BookRequest $req): mixed
     {
-        $file = $req->file('photo')->store('uploads', 'public');
+        $file = $this->imageService->saveImage($req);
         $book = $this->bookRepository->getBookBySlug($slug);
         $this->bookRepository->updateBook($req, $file, $book);
         $this->bookRepository->updateCategory($book, $req->input('categories'));
@@ -134,17 +139,14 @@ class BookController extends Controller
      */
     public function getBookByCategory(int $id): mixed
     {
-        $categories = Category::orderBy('title')->get();
-        $currentCategory = Category::where('id', $id)
-            ->first();
-        $ratings = Rating::query()
-            ->selectRaw('book_id, AVG(rating) as rating')
-            ->groupBy('book_id')
-            ->get()
-            ->pluck('rating', 'book_id');
+        $categories = $this->categoryRepository->orderByTitle();
+        $currentCategory = $this->categoryRepository->getCategoryById($id);
+        $ratings = $this->ratingRepository->getQueryRating();
         foreach ($currentCategory->books as $book) {
-            $round = round($ratings[$book->id], 2);
-            $book->avarageRating = $round;
+            if (isset($ratings[$book->id])) {
+                $round = round($ratings[$book->id], 2);
+                $book->avarageRating = $round;
+            }
         }
 
         return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);

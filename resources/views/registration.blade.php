@@ -9,11 +9,11 @@
     @csrf
     <div class="form-group mb-3">
         <label for="name">Enter your name</label>
-        <input type="text" name="name" placeholder="Enter your name" id="name" class="form-control">
+        <input type="text" name="name" placeholder="Enter your name" id="name" class="form-control" value="{{old('name')}}">
     </div>
     <div class="form-group mb-3">
         <label for="name">Enter your email</label>
-        <input type="email" name="email" placeholder="Enter your email" id="email" class="form-control">
+        <input type="email" name="email" placeholder="Enter your email" id="email" class="form-control" value="{{old('email')}}">
     </div>
     <div class="form-group mb-3">
         <label for="name">Enter your password</label>

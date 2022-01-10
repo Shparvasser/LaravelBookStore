@@ -9,19 +9,19 @@
     @csrf
     <div class="form-group mb-3">
         <label for="title">Enter title</label>
-        <input type="text" name="title" placeholder="Enter title" id="title" class="form-control">
+        <input type="text" name="title" placeholder="Enter title" id="title" class="form-control" value="{{old('title')}}">
     </div>
     <div class="form-group mb-3">
         <label for="photo">Choose your cover</label>
-        <input type="file" name="photo" id="photo" class="form-control">
+        <input type="file" name="photo" id="photo" class="form-control" value="{{old('photo')}}">
     </div>
     <div class="form-group mb-3">
         <label for="number">Page</label>
-        <input type="number" name="page" min="0" max="2500" step="1" id="page" class="form-control">
+        <input type="number" name="page" min="0" max="2500" step="1" id="page" class="form-control" value="{{old('page')}}">
     </div>
     <div class="form-group mb-3">
         <label for="content">Content</label>
-        <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+        <textarea class="form-control" name="content" id="content" rows="3" value="{{old('content')}}"></textarea>
     </div>
     <div class="form-group mb-3">
         <label>Category:</label>

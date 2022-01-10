@@ -21,4 +21,11 @@ class UserRepository implements IUserRepository
         $user->save();
         return $user;
     }
+
+    public function login($req)
+    {
+        $user = $this->model;
+        $user->email = $req->input('email');
+        $user->password = $req->input('password');
+    }
 }

@@ -25,7 +25,11 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $req): mixed
     {
-        $req->only(['email', 'password']);
+
+        $formLogin = $req->only(['email', 'password']);
+        if (Auth::attempt($formLogin)) {
+            return redirect(route('account'));
+        }
 
         return redirect(route('login'))->withErrors([
             'email' => 'Dont correct email or password'

@@ -8,13 +8,9 @@ use App\Repositories\Interfaces\ICategoryRepository;
 
 class AdminController extends Controller
 {
-    private $bookRepository;
-    private $categoryRepository;
 
-    function __construct(IBookRepository $bookRepository, ICategoryRepository $categoryRepository)
+    function __construct(private IBookRepository $bookRepository, private ICategoryRepository $categoryRepository)
     {
-        $this->bookRepository = $bookRepository;
-        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.

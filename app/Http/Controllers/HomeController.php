@@ -8,15 +8,8 @@ use App\Repositories\Interfaces\IRatingRepository;
 
 class HomeController extends Controller
 {
-    private $bookRepository;
-    private $ratingRepository;
-    private $categoryRepository;
-
-    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository, ICategoryRepository $categoryRepository)
+    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository)
     {
-        $this->bookRepository = $bookRepository;
-        $this->ratingRepository = $ratingRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

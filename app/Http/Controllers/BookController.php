@@ -13,17 +13,9 @@ use App\Repositories\Interfaces\ICategoryRepository;
 
 class BookController extends Controller
 {
-    private $bookRepository;
-    private $ratingRepository;
-    private $categoryRepository;
-    private $imageService;
 
-    public function __construct(IBookRepository $bookRepository, IRatingRepository $ratingRepository, ICategoryRepository $categoryRepository, ImageService $imageService)
+    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository, private ImageService $imageService)
     {
-        $this->bookRepository = $bookRepository;
-        $this->ratingRepository = $ratingRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->imageService = $imageService;
     }
 
     /**

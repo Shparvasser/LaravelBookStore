@@ -25,12 +25,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::get('/contact', [RegistrationController::class, 'index'])->name('contact');
+Route::get('/registration', [RegistrationController::class, 'index'])->middleware('guest')->name('registration');
 
-Route::post('/contact/submit', [RegistrationController::class, 'submit'])->name('contact-form');
+Route::post('/registration/submit', [RegistrationController::class, 'submit'])->middleware('guest')->name('registration-form');
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login/submit', [LoginController::class, 'login'])->name('login-form');
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login/submit', [LoginController::class, 'login'])->middleware('guest')->name('login-form');
 
 Route::get('/account', [RegistrationController::class, 'getUser'])->middleware('auth')->name('account');
 

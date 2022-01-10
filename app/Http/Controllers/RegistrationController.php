@@ -9,10 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
-    private $userRepository;
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(private IUserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
     /**
      * index
@@ -21,11 +19,7 @@ class RegistrationController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        if (Auth::check()) {
-            return redirect()->route('account');
-        }
-
-        return view('contact');
+        return view('registration');
     }
 
     /**
@@ -36,9 +30,6 @@ class RegistrationController extends Controller
      */
     public function submit(RegistrationRequest $req): mixed
     {
-        if (Auth::check()) {
-            return redirect()->route('account');
-        }
         $user = $this->userRepository->registration($req);
         Auth::login($user);
 

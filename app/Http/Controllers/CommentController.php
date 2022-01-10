@@ -8,13 +8,8 @@ use App\Repositories\Interfaces\ICommentRepository;
 
 class CommentController extends Controller
 {
-    private $commentRepository;
-    private $bookRepository;
-
-    function __construct(ICommentRepository $commentRepository, IBookRepository $bookRepository)
+    function __construct(private ICommentRepository $commentRepository, private IBookRepository $bookRepository)
     {
-        $this->commentRepository = $commentRepository;
-        $this->bookRepository = $bookRepository;
     }
 
     /**

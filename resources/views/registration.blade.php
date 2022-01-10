@@ -5,7 +5,7 @@
 @section('content')
 <h1>Registration page</h1>
 
-<form action="{{route('contact-form')}}" method="post">
+<form action="{{route('registration-form')}}" method="post">
     @csrf
     <div class="form-group mb-3">
         <label for="name">Enter your name</label>

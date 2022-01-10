@@ -7,11 +7,8 @@ use App\Repositories\Interfaces\IRatingRepository;
 
 class RatingController extends Controller
 {
-    private $ratingRepository;
-
-    function __construct(IRatingRepository $ratingRepository)
+    function __construct(private IRatingRepository $ratingRepository)
     {
-        $this->ratingRepository = $ratingRepository;
     }
     /**
      * ratingOn

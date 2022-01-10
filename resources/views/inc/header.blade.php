@@ -3,7 +3,7 @@
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('home') }}">Home</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('about') }}">About</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('contact') }}">Registration</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('registration') }}">Registration</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('login')}}">Login</a>
         <a class="py-2 text-dark text-decoration-none" href="{{route('account')}}">My Accaunt</a>
     </nav>

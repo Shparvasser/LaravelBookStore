@@ -14,10 +14,6 @@ class LoginController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        if (Auth::check()) {
-            return redirect()->route('account');
-        }
-
         return view('login');
     }
 
@@ -29,13 +25,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $req): mixed
     {
-        if (Auth::check()) {
-            return redirect(route('account'));
-        }
-        $formFailds = $req->only(['email', 'password']);
-        if (Auth::attempt($formFailds)) {
-            return redirect(route('account'));
-        }
+        $req->only(['email', 'password']);
 
         return redirect(route('login'))->withErrors([
             'email' => 'Dont correct email or password'

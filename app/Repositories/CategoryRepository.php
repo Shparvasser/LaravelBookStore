@@ -21,6 +21,7 @@ class CategoryRepository implements ICategoryRepository
     public function getCategoryById(int $id): mixed
     {
         $currentCategory = $this->model::where('id', $id)->first();
+
         return $currentCategory;
     }
 
@@ -50,11 +51,12 @@ class CategoryRepository implements ICategoryRepository
      * @param  mixed $req
      * @return void
      */
-    public function createCategory(object $req): void
+    public function createCategory(array $request): void
     {
         $category = $this->model;
-        $category->title = $req->input('title');
-        $category->save();
+        $category::create([
+            'title' => $request['title']
+        ]);
     }
 
     /**
@@ -64,10 +66,11 @@ class CategoryRepository implements ICategoryRepository
      * @param  mixed $category
      * @return void
      */
-    public function updateCategory(object $req, object $category): void
+    public function updateCategory(array $request, object $category): void
     {
-        $category->title = $req->input('title');
-        $category->save();
+        $category->update([
+            "title" => $request['title']
+        ]);
     }
 
     /**

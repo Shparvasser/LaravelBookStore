@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Service\ImageService;
+use App\Services\ImageService;
+use App\Services\RatingService;
 use App\Http\Requests\BookRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\IBookRepository;
@@ -14,7 +15,7 @@ use App\Repositories\Interfaces\ICategoryRepository;
 class BookController extends Controller
 {
 
-    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository, private ImageService $imageService)
+    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository, private RatingService $ratingService, private ImageService $imageService)
     {
     }
 
@@ -31,14 +32,16 @@ class BookController extends Controller
     /**
      * create
      *
-     * @param  mixed $req
+     * @param  mixed $request
      * @return Illuminate\Http\RedirectResponse
      */
-    public function create(BookRequest $req): \Illuminate\Http\RedirectResponse
+    public function create(BookRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $file = $this->imageService->saveImage($req);
-        $book = $this->bookRepository->createBook($req, $file);
-        $this->bookRepository->checkCategory($book, $req->input('categories'));
+        $data = $request->all();
+        $data['photo'] = $this->imageService->saveImage($request);
+        $userId = $request->user()->id;
+        $book = $this->bookRepository->createBook($data, $userId);
+        $this->bookRepository->checkCategory($book, $request->input('categories'));
 
         return redirect()->route('home');
     }
@@ -46,10 +49,10 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $requestuest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $requestuest)
     {
         //
     }
@@ -96,16 +99,17 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $req
+     * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $slug
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update(mixed $slug, BookRequest $req): mixed
+    public function update(mixed $slug, BookRequest $request): mixed
     {
-        $file = $this->imageService->saveImage($req);
+        $data = $request->all();
+        $data['photo'] = $this->imageService->saveImage($request);
         $book = $this->bookRepository->getBookBySlug($slug);
-        $this->bookRepository->updateBook($req, $file, $book);
-        $this->bookRepository->updateCategory($book, $req->input('categories'));
+        $this->bookRepository->updateBook($data, $book);
+        $this->bookRepository->updateCategory($book, $request->input('categories'));
 
         return redirect()->route('admin-panel')->with('success', 'The book has been updated');
     }
@@ -134,12 +138,7 @@ class BookController extends Controller
         $categories = $this->categoryRepository->orderByTitle();
         $currentCategory = $this->categoryRepository->getCategoryById($id);
         $ratings = $this->ratingRepository->getQueryRating();
-        foreach ($currentCategory->books as $book) {
-            if (isset($ratings[$book->id])) {
-                $round = round($ratings[$book->id], 2);
-                $book->avarageRating = $round;
-            }
-        }
+        $this->ratingService->roundRatingCategory($currentCategory, $ratings);
 
         return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);
     }

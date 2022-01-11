@@ -11,6 +11,20 @@ class Book extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'author_id',
+        'title',
+        'slug',
+        'photo',
+        'page',
+        'content',
+    ];
+
+    /**
      * categories
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany

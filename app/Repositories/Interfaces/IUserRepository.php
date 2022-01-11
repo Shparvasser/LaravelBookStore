@@ -4,6 +4,5 @@ namespace App\Repositories\Interfaces;
 
 interface IUserRepository
 {
-    public function registration($req);
-    public function login($req);
+    public function create(array $request);
 }

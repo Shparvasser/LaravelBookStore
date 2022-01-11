@@ -80,6 +80,45 @@ mysql
 1)git clone this project
 2)composer install
 
+--INSTALL SPATIE--
+
+    1)Consult the Prerequisites page for important considerations regarding your User models!
+
+    2)This package publishes a config/permission.php file. If you already have a file by that name, you must rename or remove it.
+
+    3)You can install the package via composer:
+
+     composer require spatie/laravel-permission
+
+    4)Optional: The service provider will automatically get registered. Or you may manually add the service provider in your config/app.php file:
+
+    'providers' => [
+        // ...
+        Spatie\Permission\PermissionServiceProvider::class,
+    ];
+
+    5)You should publish the migration and the config/permission.php config file with:
+
+    php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+    6)NOTE: If you are using UUIDs, see the Advanced section of the docs on UUID steps, before you continue. It explains some changes you may want to make to the migrations and config file before continuing. It also mentions important considerations after extending this package's models for UUID capability. If you are going to use teams feature, you have to update your config/permission.php config file and set 'teams' => true,, if you want to use a custom foreign key for teams you must change team_foreign_key.
+
+    7)Clear your config cache. This package requires access to the permission config. Generally it's bad practice to do config-caching in a development environment. If you've been caching configurations locally, clear your config cache with either of these commands:
+
+     php artisan optimize:clear
+     # or
+     php artisan config:clear
+
+    8)Run the migrations: After the config and migration have been published and configured, you can create the tables for this package by running:
+
+     php artisan migrate
+
+    9)Add the necessary trait to your User model: Consult the Basic Usage section of the docs for how to get started using the features of this package.
+
+--LINCK IN DOCUMENTATIONS--
+
+https://spatie.be/docs/laravel-permission/v5/installation-laravel
+
 --BRANCHES--
 
 main branch - It's branch for staging, we merge all feature branches in master.
@@ -96,4 +135,4 @@ When creating a user, according to the standard, he is given the role of "user" 
 
 --DB SEED--
 
-Now doesnt working!!!
+Now it's not working!!!

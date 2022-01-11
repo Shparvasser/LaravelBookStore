@@ -27,9 +27,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(CategoryRequest $req): \Illuminate\Http\RedirectResponse
+    public function create(CategoryRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $this->categoryRepository->createCategory($req);
+        $this->categoryRepository->createCategory($request->all());
 
         return redirect()->route('admin-panel')->with('success', 'The category has been created');
     }
@@ -76,10 +76,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(CategoryRequest $req, int $id): \Illuminate\Http\RedirectResponse
+    public function update(CategoryRequest $request, int $id): \Illuminate\Http\RedirectResponse
     {
         $category = $this->categoryRepository->getCategoryById($id);
-        $this->categoryRepository->updateCategory($req, $category);
+        $this->categoryRepository->updateCategory($request->all(), $category);
 
         return redirect()->route('admin-panel')->with('success', 'The category has been updated');
     }

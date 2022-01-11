@@ -10,6 +10,17 @@ class Comment extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'book_id',
+        'author_id',
+        'comment',
+    ];
+
+    /**
      * user
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo

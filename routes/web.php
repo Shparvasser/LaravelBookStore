@@ -25,12 +25,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::get('/registration', [RegistrationController::class, 'index'])->middleware('guest')->name('registration');
 
-Route::post('/registration/submit', [RegistrationController::class, 'submit'])->middleware('guest')->name('registration-form');
+Route::middleware('guest')->group(function () {
+    Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
+    Route::post('/registration/submit', [RegistrationController::class, 'submit'])->name('registration-form');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login/submit', [LoginController::class, 'login'])->name('login-form');
+});
 
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login/submit', [LoginController::class, 'login'])->middleware('guest')->name('login-form');
 
 Route::get('/account', [RegistrationController::class, 'getUser'])->middleware('auth')->name('account');
 
@@ -42,8 +44,10 @@ Route::get('/logout', function () {
 Route::get('/book', [BookController::class, 'index'])->name('book');
 Route::post('/book/create', [BookController::class, 'create'])->name('book-create');
 
-Route::get('/view/{slug}', [BookController::class, 'show'])->middleware('auth')->name('book-show');
-Route::post('/view/{slug}/comment', [CommentController::class, 'commentOn'])->middleware('auth')->name('book-comment');
-Route::post('/view/{slug}/rating', [RatingController::class, 'ratingOn'])->middleware('auth')->name('book-rating');
+Route::middleware('auth')->group(function () {
+    Route::get('/view/{slug}', [BookController::class, 'show'])->name('book-show');
+    Route::post('/view/{slug}/comment', [CommentController::class, 'commentOn'])->name('book-comment');
+    Route::post('/view/{slug}/rating', [RatingController::class, 'ratingOn'])->name('book-rating');
+});
 
 Route::get('/category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');

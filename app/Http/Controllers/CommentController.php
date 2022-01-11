@@ -15,14 +15,16 @@ class CommentController extends Controller
     /**
      * commentOn
      *
-     * @param  mixed $req
+     * @param  mixed $request
      * @param  mixed $slug
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function commentOn(CommentRequest $req, mixed $slug): mixed
+    public function commentOn(CommentRequest $request, mixed $slug): mixed
     {
+        $data = $request->all();
         $book = $this->bookRepository->getBookBySlug($slug);
-        $this->commentRepository->createComment($req, $book->id);
+        $userId = $request->user()->id;
+        $this->commentRepository->createComment($data, $book->id, $userId);
 
         return redirect()->route('home')->with('success', 'Your comment added');
     }

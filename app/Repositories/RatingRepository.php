@@ -30,13 +30,19 @@ class RatingRepository implements IRatingRepository
      * @param  mixed $req
      * @return void
      */
-    public function createRating(mixed $req): void
+    public function createRating(mixed $data): void
     {
         $rating = $this->model;
-        $rating->book_id = $req->input('book_id');
-        $rating->author_id = $req->input('author_id');
-        $rating->rating = $req->input('rating');
-        $rating->save();
+        // $rating->book_id = $req->input('book_id');
+        // $rating->author_id = $req->input('author_id');
+        // $rating->rating = $req->input('rating');
+        // $rating->save();
+
+        $rating::create([
+            'book_id' => $data['book_id'],
+            'author_id' => $data['author_id'],
+            'rating' => $data['rating'],
+        ]);
     }
 
     public function getQueryRating()

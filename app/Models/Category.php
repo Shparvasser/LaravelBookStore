@@ -10,6 +10,15 @@ class Category extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'title',
+    ];
+
+    /**
      * books
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany

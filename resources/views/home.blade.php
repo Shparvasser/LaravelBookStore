@@ -31,7 +31,7 @@
                         @if ($book->avarageRating)
                             <div>Rating: {{$book->avarageRating}}</div>
                         @else
-                            <div class="py-2">This book is not currently rated</div>
+                            <div>Not currently rated now</div>
                         @endif
                 </div>
             </div>

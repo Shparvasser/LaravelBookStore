@@ -4,5 +4,5 @@ namespace App\Repositories\Interfaces;
 
 interface ICommentRepository
 {
-    public function createComment(object $req, int $bookId);
+    public function createComment(array $data, int $bookId, $userId);
 }

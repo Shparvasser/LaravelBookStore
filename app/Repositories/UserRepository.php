@@ -11,21 +11,15 @@ class UserRepository implements IUserRepository
     {
     }
 
-    public function registration($req)
+    public function create(array $request)
     {
         $user = $this->model;
-        $user->name = $req->input('name');
-        $user->email = $req->input('email');
-        $user->password = $req->input('password');
         $user->assignRole('user');
-        $user->save();
-        return $user;
-    }
 
-    public function login($req)
-    {
-        $user = $this->model;
-        $user->email = $req->input('email');
-        $user->password = $req->input('password');
+        return $user::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => $request['password']
+        ]);
     }
 }

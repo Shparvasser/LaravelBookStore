@@ -25,12 +25,12 @@ class RegistrationController extends Controller
     /**
      * submit
      *
-     * @param  mixed $req
+     * @param  mixed $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function submit(RegistrationRequest $req): mixed
+    public function submit(RegistrationRequest $request): mixed
     {
-        $user = $this->userRepository->registration($req);
+        $user = $this->userRepository->create($request->all());
         Auth::login($user);
 
         return redirect()->route('account')->with('success', 'Welcom to our office');
@@ -39,12 +39,12 @@ class RegistrationController extends Controller
     /**
      * getUser
      *
-     * @param  mixed $req
+     * @param  mixed $request
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function getUser(Request $req): mixed
+    public function getUser(Request $request): mixed
     {
-        $user = $req->user();
+        $user = $request->user();
 
         return view('account', ['user' => $user]);
     }

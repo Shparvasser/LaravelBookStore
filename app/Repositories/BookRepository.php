@@ -3,12 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Book;
-use App\Models\User;
+use App\Services\ImageService;
 use App\Repositories\Interfaces\IBookRepository;
 
 class BookRepository implements IBookRepository
 {
-    function __construct(private Book $model)
+    function __construct(private Book $model, private ImageService $imageService,)
     {
     }
 
@@ -64,16 +64,17 @@ class BookRepository implements IBookRepository
      * @param  mixed $file
      * @return \App\Models\Book
      */
-    public function createBook(mixed $req, mixed $file): \App\Models\Book
+    public function createBook(mixed $data, $userId): \App\Models\Book
     {
         $book = $this->model;
-        $book->author_id = $req->user()->id;
-        $book->title = $req->input('title');
-        $book->photo = $file;
-        $book->page = $req->input('page');
-        $book->content = $req->input('content');
-        $book->save();
-        return $book;
+
+        return $book::create([
+            'author_id' => $userId,
+            'title' => $data['title'],
+            'photo' => $data['photo'],
+            'page' => $data['page'],
+            'content' => $data['content'],
+        ]);
     }
 
     /**
@@ -95,14 +96,15 @@ class BookRepository implements IBookRepository
      * @param  mixed $book
      * @return void
      */
-    public function updateBook(mixed $req, mixed $file, mixed $book): void
+    public function updateBook(array $data, mixed $book): void
     {
-        $book->author_id = $book->author_id;
-        $book->title = $req->input('title');
-        $book->photo = $file;
-        $book->page = $req->input('page');
-        $book->content = $req->input('content');
-        $book->save();
+        $book->update([
+            'author_id' => $book->author_id,
+            'title' => $data['title'],
+            'photo' => $data['photo'],
+            'page' => $data['page'],
+            'content' => $data['content'],
+        ]);
     }
 
     /**

@@ -25,34 +25,34 @@ class BookRepository implements IBookRepository
     /**
      * checkCategory
      *
-     * @param  mixed $book
-     * @param  mixed $input
+     * @param  object $book
+     * @param  array $request
      * @return void
      */
-    public function checkCategory(mixed $book, mixed $input): void
+    public function checkCategory(object $book, array $request): void
     {
-        $book->categories()->attach($input);
+        $book->categories()->attach($request);
     }
 
     /**
      * updateCategory
      *
-     * @param  mixed $book
-     * @param  mixed $input
+     * @param  object $book
+     * @param  array $request
      * @return void
      */
-    public function updateCategory(mixed $book, mixed $input): void
+    public function updateCategory(object $book, array $request): void
     {
-        $book->categories()->sync($input);
+        $book->categories()->sync($request);
     }
 
     /**
      * getBookBySlug
      *
-     * @param  mixed $slug
+     * @param  string $slug
      * @return \App\Models\Book
      */
-    public function getBookBySlug(mixed $slug): \App\Models\Book
+    public function getBookBySlug(string $slug): \App\Models\Book
     {
         return $this->model::where('slug', $slug)->first();
     }
@@ -60,11 +60,11 @@ class BookRepository implements IBookRepository
     /**
      * createBook
      *
-     * @param  mixed $req
-     * @param  mixed $file
+     * @param  array $data
+     * @param  int $userId
      * @return \App\Models\Book
      */
-    public function createBook(mixed $data, $userId): \App\Models\Book
+    public function createBook(array $data, int $userId): \App\Models\Book
     {
         $book = $this->model;
 
@@ -80,10 +80,10 @@ class BookRepository implements IBookRepository
     /**
      * deleteBook
      *
-     * @param  mixed $slug
+     * @param  string $slug
      * @return void
      */
-    public function deleteBook(mixed $slug): void
+    public function deleteBook(string $slug): void
     {
         $this->model::where('slug', $slug)->delete();
     }
@@ -91,12 +91,11 @@ class BookRepository implements IBookRepository
     /**
      * updateBook
      *
-     * @param  mixed $req
-     * @param  mixed $file
+     * @param  array $data
      * @param  mixed $book
      * @return void
      */
-    public function updateBook(array $data, mixed $book): void
+    public function updateBook(array $data, object $book): void
     {
         $book->update([
             'author_id' => $book->author_id,
@@ -110,9 +109,9 @@ class BookRepository implements IBookRepository
     /**
      * withUser
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function withUser(): mixed
+    public function withUser(): \Illuminate\Database\Eloquent\Collection|static
     {
         return $this->model::with('user')->get();
     }

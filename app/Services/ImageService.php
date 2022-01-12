@@ -7,10 +7,10 @@ class ImageService
     /**
      * saveImage
      *
-     * @param  mixed $req
+     * @param  object $request
      * @return mixed
      */
-    public function saveImage(mixed $request): mixed
+    public function saveImage(object $request): mixed
     {
         return $request->file('photo')->store('uploads', 'public');
     }

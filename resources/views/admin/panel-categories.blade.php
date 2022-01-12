@@ -40,7 +40,7 @@
     @csrf
     <div class="form-group mb-3">
         <label for="title">Enter title category</label>
-        <input type="text" name="title" placeholder="Enter title category" id="title" class="form-control">
+        <input type="text" name="title" placeholder="Enter title category" id="title" class="form-control" value="{{old('title')}}">
     </div>
     <button type="submit" class="btn btn-success">Create</button>
 </form>

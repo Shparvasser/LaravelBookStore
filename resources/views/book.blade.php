@@ -21,7 +21,7 @@
     </div>
     <div class="form-group mb-3">
         <label for="content">Content</label>
-        <textarea class="form-control" name="content" id="content" rows="3" value="{{old('content')}}"></textarea>
+        <textarea class="form-control" name="content" id="content" rows="3">{{old('content')}}</textarea>
     </div>
     <div class="form-group mb-3">
         <label>Category:</label>

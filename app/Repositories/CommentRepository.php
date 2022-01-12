@@ -15,18 +15,15 @@ class CommentRepository implements ICommentRepository
     /**
      * createComment
      *
-     * @param  mixed $req
-     * @param  mixed $bookId
+     * @param  array $data
+     * @param  int $bookId
+     * @param  int $userId
      * @return \App\Models\Comment
      */
-    public function createComment(mixed $data, mixed $bookId, $userId): \App\Models\Comment
+    public function createComment(array $data, int $bookId, int $userId): \App\Models\Comment
     {
         $comment = $this->model;
-        // $comment->author_id = $req->user()->id;
-        // $comment->book_id = $bookId;
-        // $comment->comment = $req->input('comment');
-        // $comment->save();
-        // return $comment;
+
         return $comment::create([
             'author_id' => $userId,
             'book_id' => $bookId,

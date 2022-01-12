@@ -32,7 +32,7 @@ class BookController extends Controller
     /**
      * create
      *
-     * @param  mixed $request
+     * @param  BookRequest $request
      * @return Illuminate\Http\RedirectResponse
      */
     public function create(BookRequest $request): \Illuminate\Http\RedirectResponse
@@ -52,7 +52,7 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $requestuest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $requestuest)
+    public function store(Request $request)
     {
         //
     }
@@ -60,10 +60,10 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $slug
+     * @param  string $slug
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(mixed $slug): mixed
+    public function show(string $slug): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $book = $this->bookRepository->getBookBySlug($slug);
         $ratings = $this->ratingRepository->averageRating($book->id);
@@ -85,10 +85,10 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  mixed  $slug
+     * @param  string $slug
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(mixed $slug): mixed
+    public function edit(string $slug): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $book = $this->bookRepository->getBookBySlug($slug);
         $categories = $this->categoryRepository->all();
@@ -100,10 +100,10 @@ class BookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $slug
+     * @param  string $slug
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update(mixed $slug, BookRequest $request): mixed
+    public function update(string $slug, BookRequest $request): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
         $data['photo'] = $this->imageService->saveImage($request);
@@ -117,10 +117,10 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  mixed  $slug
+     * @param  string $slug
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(mixed $slug): mixed
+    public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $this->bookRepository->deleteBook($slug);
 
@@ -130,14 +130,14 @@ class BookController extends Controller
     /**
      * getBookByCategory
      *
-     * @param  mixed $id
+     * @param  int $id
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function getBookByCategory(int $id): mixed
+    public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
         $currentCategory = $this->categoryRepository->getCategoryById($id);
-        $ratings = $this->ratingRepository->getQueryRating();
+        $ratings = $this->ratingRepository->getQuery();
         $this->ratingService->roundRatingCategory($currentCategory, $ratings);
 
         return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);

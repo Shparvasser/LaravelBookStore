@@ -11,7 +11,13 @@ class UserRepository implements IUserRepository
     {
     }
 
-    public function create(array $request)
+    /**
+     * create
+     *
+     * @param  mixed $request
+     * @return \App\Models\User
+     */
+    public function create(array $request): \App\Models\User
     {
         $user = $this->model;
         $user->assignRole('user');

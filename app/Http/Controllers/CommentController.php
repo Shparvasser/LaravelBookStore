@@ -15,11 +15,11 @@ class CommentController extends Controller
     /**
      * commentOn
      *
-     * @param  mixed $request
-     * @param  mixed $slug
+     * @param  CommentRequest $request
+     * @param  string $slug
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function commentOn(CommentRequest $request, mixed $slug): mixed
+    public function commentOn(CommentRequest $request, string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
         $book = $this->bookRepository->getBookBySlug($slug);

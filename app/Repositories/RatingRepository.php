@@ -14,10 +14,10 @@ class RatingRepository implements IRatingRepository
     /**
      * averageRating
      *
-     * @param  mixed $bookId
+     * @param  int $bookId
      * @return float
      */
-    public function averageRating(mixed $bookId): float
+    public function averageRating(int $bookId): float
     {
         $rating = $this->model::where('book_id', $bookId)->avg('rating');
         $round = round($rating, 2);
@@ -27,17 +27,12 @@ class RatingRepository implements IRatingRepository
     /**
      * createRating
      *
-     * @param  mixed $req
+     * @param  array $data
      * @return void
      */
-    public function createRating(mixed $data): void
+    public function createRating(array $data): void
     {
         $rating = $this->model;
-        // $rating->book_id = $req->input('book_id');
-        // $rating->author_id = $req->input('author_id');
-        // $rating->rating = $req->input('rating');
-        // $rating->save();
-
         $rating::create([
             'book_id' => $data['book_id'],
             'author_id' => $data['author_id'],
@@ -45,7 +40,12 @@ class RatingRepository implements IRatingRepository
         ]);
     }
 
-    public function getQueryRating()
+    /**
+     * getQuery
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function getQuery(): \Illuminate\Support\Collection
     {
         return $this->model::query()
             ->selectRaw('book_id, AVG(rating) as rating')

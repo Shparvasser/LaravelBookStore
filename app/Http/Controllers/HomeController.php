@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         $categories = $this->categoryRepository->orderByTitle();
         $books = $this->bookRepository->withUser();
-        $ratings = $this->ratingRepository->getQueryRating();
+        $ratings = $this->ratingRepository->getQuery();
         $this->ratingService->roundRatingHome($books, $ratings);
 
         return view('home', ['books' => $books, 'categories' => $categories]);

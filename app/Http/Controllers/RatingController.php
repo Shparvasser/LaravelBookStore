@@ -13,10 +13,10 @@ class RatingController extends Controller
     /**
      * ratingOn
      *
-     * @param  mixed $request
+     * @param  RatingRequest $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function ratingOn(RatingRequest $request): mixed
+    public function ratingOn(RatingRequest $request): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $data = $request->all();
         $this->ratingRepository->createRating($data);

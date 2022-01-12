@@ -20,10 +20,10 @@ class LoginController extends Controller
     /**
      * login
      *
-     * @param  mixed $request
+     * @param  LoginRequest $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function login(LoginRequest $request): mixed
+    public function login(LoginRequest $request): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
 
         $formLogin = $request->only(['email', 'password']);

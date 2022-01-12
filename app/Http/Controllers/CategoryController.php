@@ -10,8 +10,8 @@ class CategoryController extends Controller
 {
     public function __construct(private ICategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $categoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +23,10 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * create
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  CategoryRequest $request
+     * @return Illuminate\Http\RedirectResponse
      */
     public function create(CategoryRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -48,7 +49,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,7 +60,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\View
      */
     public function edit(int $id): \Illuminate\Contracts\View\View
@@ -72,8 +73,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  CategoryRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(CategoryRequest $request, int $id): \Illuminate\Http\RedirectResponse

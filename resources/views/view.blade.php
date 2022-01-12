@@ -46,7 +46,7 @@
     @csrf
     <div class="form-group mb-3">
         <label for="comment">Comment:</label>
-        <textarea class="form-control mb-2" name="comment" id="comment" rows="3"></textarea>
+        <textarea class="form-control mb-2" name="comment" id="comment" rows="3">{{old('comment')}}</textarea>
     </div>
     <button type="submit" class="btn btn-success">Send comment</button>
 </form>
@@ -56,7 +56,7 @@
         <input type="hidden" name='author_id' id="author_id" value="{{$user}}" readonly>
         <input type="hidden" name='book_id' id="book_id" value="{{$book->id}}" readonly>
         <label for="rating">Rating:</label>
-        <input type="number" min="1" max="5" step="0.1" name="rating" id="rating">
+        <input type="number" min="1" max="5" step="0.1" name="rating" id="rating" >
     </div>
     <button type="submit" class="btn btn-success">Send rating</button>
 </form>

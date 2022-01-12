@@ -4,7 +4,14 @@ namespace App\Services;
 
 class RatingService
 {
-    public function roundRatingCategory($items, $attribute)
+    /**
+     * roundRatingCategory
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection $items
+     * @param  \Illuminate\Database\Eloquent\Collection $attribute
+     * @return void
+     */
+    public function roundRatingCategory(\Illuminate\Database\Eloquent\Collection $items, \Illuminate\Database\Eloquent\Collection $attribute): void
     {
         foreach ($items->books as $item) {
             if (isset($attribute[$item->id])) {
@@ -14,7 +21,14 @@ class RatingService
         }
     }
 
-    public function roundRatingHome($items, $attribute)
+    /**
+     * roundRatingHome
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection $items
+     * @param  \Illuminate\Support\Collection $attribute
+     * @return void
+     */
+    public function roundRatingHome(\Illuminate\Database\Eloquent\Collection $items, \Illuminate\Support\Collection $attribute): void
     {
         foreach ($items as $item) {
             if (isset($attribute[$item->id])) {

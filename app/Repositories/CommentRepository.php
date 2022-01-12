@@ -3,9 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Comment;
-use App\Repositories\Interfaces\ICommentRepository;
 
-class CommentRepository implements ICommentRepository
+class CommentRepository
 {
     function __construct(private Comment $model)
     {

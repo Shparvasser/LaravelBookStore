@@ -3,9 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Rating;
-use App\Repositories\Interfaces\IRatingRepository;
 
-class RatingRepository implements IRatingRepository
+class RatingRepository
 {
     function __construct(private Rating $model)
     {

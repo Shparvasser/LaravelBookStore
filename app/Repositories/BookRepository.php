@@ -4,9 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Book;
 use App\Services\ImageService;
-use App\Repositories\Interfaces\IBookRepository;
 
-class BookRepository implements IBookRepository
+class BookRepository
 {
     function __construct(private Book $model, private ImageService $imageService,)
     {

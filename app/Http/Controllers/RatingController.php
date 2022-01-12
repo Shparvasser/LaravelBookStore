@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RatingRequest;
-use App\Repositories\Interfaces\IRatingRepository;
+use App\Repositories\RatingRepository;
 
 class RatingController extends Controller
 {
-    function __construct(private IRatingRepository $ratingRepository)
+    function __construct(private RatingRepository $ratingRepository)
     {
     }
     /**

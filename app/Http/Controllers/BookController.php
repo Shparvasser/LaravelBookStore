@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 use App\Services\ImageService;
 use App\Services\RatingService;
 use App\Http\Requests\BookRequest;
+use App\Repositories\BookRepository;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Interfaces\IBookRepository;
-use App\Repositories\Interfaces\IRatingRepository;
-use App\Repositories\Interfaces\ICategoryRepository;
+use App\Repositories\RatingRepository;
+use App\Repositories\CategoryRepository;
 
 class BookController extends Controller
 {
 
-    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository, private RatingService $ratingService, private ImageService $imageService)
+    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private RatingService $ratingService, private ImageService $imageService)
     {
     }
 

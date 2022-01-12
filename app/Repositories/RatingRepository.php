@@ -43,9 +43,9 @@ class RatingRepository implements IRatingRepository
     /**
      * getQuery
      *
-     * @return Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getQuery(): \Illuminate\Support\Collection
+    public function getQuery(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->model::query()
             ->selectRaw('book_id, AVG(rating) as rating')

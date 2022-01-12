@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\Interfaces\ICategoryRepository;
+use App\Repositories\CategoryRepository;
 
 class CategoryController extends Controller
 {
-    public function __construct(private ICategoryRepository $categoryRepository)
+    public function __construct(private CategoryRepository $categoryRepository)
     {
     }
 

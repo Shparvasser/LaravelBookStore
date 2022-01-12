@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Interfaces\IBookRepository;
-use App\Repositories\Interfaces\ICategoryRepository;
-use App\Repositories\Interfaces\IRatingRepository;
 use App\Services\RatingService;
+use App\Repositories\BookRepository;
+use App\Repositories\RatingRepository;
+use App\Repositories\CategoryRepository;
 
 class HomeController extends Controller
 {
-    public function __construct(private IBookRepository $bookRepository, private IRatingRepository $ratingRepository, private ICategoryRepository $categoryRepository, private RatingService $ratingService)
+    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private RatingService $ratingService)
     {
     }
 

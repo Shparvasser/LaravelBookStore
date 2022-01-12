@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\BookRepository;
 use App\Http\Requests\CommentRequest;
-use App\Repositories\Interfaces\IBookRepository;
-use App\Repositories\Interfaces\ICommentRepository;
+use App\Repositories\CommentRepository;
 
 class CommentController extends Controller
 {
-    function __construct(private ICommentRepository $commentRepository, private IBookRepository $bookRepository)
+    function __construct(private CommentRepository $commentRepository, private BookRepository $bookRepository)
     {
     }
 

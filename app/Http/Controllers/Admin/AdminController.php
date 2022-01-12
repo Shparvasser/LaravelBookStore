@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\IBookRepository;
-use App\Repositories\Interfaces\ICategoryRepository;
+use App\Repositories\BookRepository;
+use App\Repositories\CategoryRepository;
 
 class AdminController extends Controller
 {
 
-    function __construct(private IBookRepository $bookRepository, private ICategoryRepository $categoryRepository)
+    function __construct(private BookRepository $bookRepository, private CategoryRepository $categoryRepository)
     {
     }
     /**

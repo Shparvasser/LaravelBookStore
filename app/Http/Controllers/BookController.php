@@ -15,7 +15,7 @@ use App\Repositories\CategoryRepository;
 class BookController extends Controller
 {
 
-    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private RatingService $ratingService, private ImageService $imageService)
+    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private ImageService $imageService)
     {
     }
 
@@ -136,10 +136,8 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $currentCategory = $this->categoryRepository->getCategoryById($id);
-        $ratings = $this->ratingRepository->getQuery();
-        $this->ratingService->roundRatingCategory($currentCategory, $ratings);
+        $ratings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
 
-        return view('home', ['books' => $currentCategory->books, 'categories' => $categories]);
+        return view('home', ['ratings' => $ratings, 'categories' => $categories]);
     }
 }

@@ -42,14 +42,33 @@ class RatingRepository
     /**
      * getQuery
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Support\Collection
      */
-    public function getQuery(): \Illuminate\Database\Eloquent\Collection
+    public function getModelsBooksRatings(): \Illuminate\Support\Collection
     {
         return $this->model::query()
-            ->selectRaw('book_id, AVG(rating) as rating')
+            ->join('books', 'books.id', '=', 'ratings.book_id')
+            ->selectRaw('books.*, AVG(rating) as rating')
             ->groupBy('book_id')
-            ->get()
-            ->pluck('rating', 'book_id');
+            ->with('user')
+            ->get();
+    }
+
+    /**
+     * getQuery
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getModelsCategoriesBooksRatings($id): \Illuminate\Support\Collection
+    {
+        return $this->model::query()
+            ->join('books', 'books.id', '=', 'ratings.book_id')
+            ->join('book_category', 'book_category.book_id', '=', 'books.id')
+            ->join('categories', 'categories.id', '=', 'book_category.category_id')
+            ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')
+            ->where('categories.id', $id)
+            ->groupBy('book_id')
+            ->with('user')
+            ->get();
     }
 }

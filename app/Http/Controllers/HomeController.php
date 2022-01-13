@@ -9,7 +9,7 @@ use App\Repositories\CategoryRepository;
 
 class HomeController extends Controller
 {
-    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private RatingService $ratingService)
+    public function __construct(private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository)
     {
     }
 
@@ -21,10 +21,8 @@ class HomeController extends Controller
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $books = $this->bookRepository->withUser();
-        $ratings = $this->ratingRepository->getQuery();
-        $this->ratingService->roundRatingHome($books, $ratings);
+        $ratings = $this->ratingRepository->getModelsBooksRatings();
 
-        return view('home', ['books' => $books, 'categories' => $categories]);
+        return view('home', ['categories' => $categories, 'ratings' => $ratings]);
     }
 }

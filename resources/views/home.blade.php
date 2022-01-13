@@ -12,27 +12,29 @@
     @endforeach
 </div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    @foreach ($books as $book)
+    @foreach ($ratings as $rating)
         <div class="col mb-4">
             <div class="card shadow-sm">
                 <div class="card-header">
-                    <h4 class="text-center fw-normal">{{$book->title}}</h4>
+                    <h4 class="text-center fw-normal">{{$rating->title}}</h4>
                 </div>
-                <img class="img-fluid" src="{{asset($book->photo)}}" alt="Sorry:(">
-                <div class="">Pages:{{$book->page}}</div>
-                <div class="">Author:{{$book->user->name}}</div>
-                <div class="py-2">{{$book->created_at}}</div>
+                <img class="img-fluid" src="{{asset($rating->photo)}}" alt="Sorry:(">
+                <div class="">Pages:{{$rating->page}}</div>
+                <div class="">Author:{{$rating->user->name}}</div>
+                <div class="py-2">{{$rating->created_at}}</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <form action="{{route('book-show',[$book->slug])}}">
+                        <form action="{{route('book-show',[$rating->slug])}}">
                             <button class="btn btn-sm btn-outline-secondary">View</button>
                         </form>
                     </div>
-                        @if ($book->avarageRating)
-                            <div>Rating: {{$book->avarageRating}}</div>
+                    <div>
+                        @if ($rating->rating)
+                            <div>Rating: {{round($rating->rating,2)}}</div>
                         @else
                             <div>Not currently rated now</div>
                         @endif
+                    </div>
                 </div>
             </div>
         </div>

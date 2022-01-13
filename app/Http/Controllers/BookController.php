@@ -137,14 +137,7 @@ class BookController extends Controller
     {
         $categories = $this->categoryRepository->orderByTitle();
         $ratings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
-        $page = 1;
-        $limit = 2;
-        $start = ($page - 1) * $limit;
-        $totalBooks = $this->bookRepository->getTotalBooks();
-        $totalPages = ($totalBooks / $limit) + 1;
 
-
-
-        return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages]);
+        return view('home', ['ratings' => $ratings, 'categories' => $categories]);
     }
 }

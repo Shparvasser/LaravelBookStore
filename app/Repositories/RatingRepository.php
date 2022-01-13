@@ -58,9 +58,9 @@ class RatingRepository
     /**
      * getQuery
      *
-     * @return
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getModelsBooksRatings($start, $limit)
+    public function getModelsBooksRatings(): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->model::query()
             ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
@@ -68,20 +68,15 @@ class RatingRepository
             ->groupBy('id')
             ->with('user')
             ->orderBy('slug')
-            ->limit($limit)
-            ->offset($start)
-            ->get();
-
-        // ->paginate(9);
-        // order by id asc limit 15 offset 15
+            ->paginate(9);
     }
 
     /**
      * getQuery
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getModelsCategoriesBooksRatings($id): \Illuminate\Support\Collection
+    public function getModelsCategoriesBooksRatings($id): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->model::query()
             ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
@@ -91,6 +86,6 @@ class RatingRepository
             ->where('categories.id', $id)
             ->groupBy('book_id')
             ->with('user')
-            ->get();
+            ->paginate(9);
     }
 }

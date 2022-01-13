@@ -80,11 +80,11 @@ class BookRepository
      * deleteBook
      *
      * @param  string $slug
-     * @return void
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function deleteBook(string $slug): void
+    public function deleteBook(string $slug): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $this->model::where('slug', $slug)->delete();
+        return $this->model::where('slug', $slug)->delete() ? response(null, 204) : response(null, 500);
     }
 
     /**
@@ -113,13 +113,5 @@ class BookRepository
     public function withUser(): \Illuminate\Database\Eloquent\Collection|static
     {
         return $this->model::with('user')->get();
-    }
-
-    public function getTotalBooks()
-    {
-        $count = $this->model::query()
-            ->selectRaw('COUNT(id) as Id')
-            ->pluck('Id');
-        return $count['0'];
     }
 }

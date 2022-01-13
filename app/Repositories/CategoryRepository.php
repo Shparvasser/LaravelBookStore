@@ -76,10 +76,10 @@ class CategoryRepository
      * deleteCategory
      *
      * @param  mixed $id
-     * @return void
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function deleteCategory(int $id): void
+    public function deleteCategory(int $id): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $this->model::where('id', $id)->delete();
+        return $this->model::where('id', $id)->delete() ? response(null, 204) : response(null, 500);
     }
 }

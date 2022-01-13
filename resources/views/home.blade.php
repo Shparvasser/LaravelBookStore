@@ -40,6 +40,13 @@
         </div>
     @endforeach
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @for ($i = 1; $i <= $pages; $i++)
+            <li class="page-item"><a class="page-link" href="{{route('page',[$i])}}">{{$i}}</a></li>
+        @endfor
+    </ul>
+  </nav>
 @endsection
 
 @section('aside')

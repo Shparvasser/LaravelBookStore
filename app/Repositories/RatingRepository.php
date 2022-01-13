@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Book;
 use App\Models\Rating;
+use Facade\Ignition\ErrorPage\Renderer;
 
 class RatingRepository
 {
@@ -39,19 +41,39 @@ class RatingRepository
         ]);
     }
 
+    // /**
+    //  * getQuery
+    //  *
+    //  * @return \Illuminate\Support\Collection
+    //  */
+    // public function getModelsBooksRatings(): \Illuminate\Support\Collection
+    // {
+    //     return $this->model::query()
+    //         ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
+    //         ->selectRaw('books.*, AVG(rating) as rating')
+    //         ->groupBy('id')
+    //         ->with('user')
+    //         ->get();
+    // }
     /**
      * getQuery
      *
-     * @return \Illuminate\Support\Collection
+     * @return
      */
-    public function getModelsBooksRatings(): \Illuminate\Support\Collection
+    public function getModelsBooksRatings($start, $limit)
     {
         return $this->model::query()
-            ->join('books', 'books.id', '=', 'ratings.book_id')
+            ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
             ->selectRaw('books.*, AVG(rating) as rating')
-            ->groupBy('book_id')
+            ->groupBy('id')
             ->with('user')
+            ->orderBy('slug')
+            ->limit($limit)
+            ->offset($start)
             ->get();
+
+        // ->paginate(9);
+        // order by id asc limit 15 offset 15
     }
 
     /**
@@ -62,7 +84,7 @@ class RatingRepository
     public function getModelsCategoriesBooksRatings($id): \Illuminate\Support\Collection
     {
         return $this->model::query()
-            ->join('books', 'books.id', '=', 'ratings.book_id')
+            ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
             ->join('book_category', 'book_category.book_id', '=', 'books.id')
             ->join('categories', 'categories.id', '=', 'book_category.category_id')
             ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')

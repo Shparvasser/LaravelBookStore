@@ -22,6 +22,7 @@ use App\Http\Controllers\RegistrationController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/page/{page}', [HomeController::class, 'totalBooks'])->name('page');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 

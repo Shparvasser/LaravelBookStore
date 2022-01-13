@@ -114,4 +114,12 @@ class BookRepository
     {
         return $this->model::with('user')->get();
     }
+
+    public function getTotalBooks()
+    {
+        $count = $this->model::query()
+            ->selectRaw('COUNT(id) as Id')
+            ->pluck('Id');
+        return $count['0'];
+    }
 }

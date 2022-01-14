@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Repositories\BookRepository;
@@ -8,7 +7,7 @@ use App\Repositories\CommentRepository;
 
 class CommentController extends Controller
 {
-    function __construct(private CommentRepository $commentRepository, private BookRepository $bookRepository)
+    public function __construct(private CommentRepository $commentRepository, private BookRepository $bookRepository)
     {
     }
 

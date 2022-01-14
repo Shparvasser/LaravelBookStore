@@ -4,7 +4,7 @@
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('home') }}">Home</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('about') }}">About</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('registration') }}">Registration</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('login')}}">Login</a>
-        <a class="py-2 text-dark text-decoration-none" href="{{route('account')}}">My Accaunt</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('login') }}">Login</a>
+        <a class="py-2 text-dark text-decoration-none" href="{{ route('account') }}">My Accaunt</a>
     </nav>
 </div>

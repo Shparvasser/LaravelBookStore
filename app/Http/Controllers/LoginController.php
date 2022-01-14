@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
@@ -25,7 +24,6 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-
         $formLogin = $request->only(['email', 'password']);
         if (Auth::attempt($formLogin)) {
             return redirect(route('account'));

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Support\Str;
@@ -64,7 +63,6 @@ class Book extends Model
         return $this->hasMany(Rating::class);
     }
 
-
     /**
      * setTitleAttribute
      *
@@ -76,7 +74,6 @@ class Book extends Model
         $this->attributes['title'] = $title;
         $this->attributes['slug'] = $this->uniqueSlug($title);
     }
-
 
     /**
      * uniqueSlug

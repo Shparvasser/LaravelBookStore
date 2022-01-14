@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Category;
 
 class CategoryRepository
 {
-
     public function __construct(private Category $model)
     {
     }
@@ -68,7 +66,7 @@ class CategoryRepository
     public function updateCategory(array $request, object $category): void
     {
         $category->update([
-            "title" => $request['title']
+            'title' => $request['title']
         ]);
     }
 

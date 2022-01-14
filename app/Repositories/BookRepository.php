@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Book;
@@ -7,7 +6,7 @@ use App\Services\ImageService;
 
 class BookRepository
 {
-    function __construct(private Book $model, private ImageService $imageService,)
+    public function __construct(private Book $model, private ImageService $imageService, )
     {
     }
 

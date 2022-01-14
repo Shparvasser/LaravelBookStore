@@ -26,14 +26,12 @@ Route::get('/page/{page}', [HomeController::class, 'totalBooks'])->name('page');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-
 Route::middleware('guest')->group(function () {
     Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
     Route::post('/registration/submit', [RegistrationController::class, 'submit'])->name('registration-form');
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login/submit', [LoginController::class, 'login'])->name('login-form');
 });
-
 
 Route::get('/account', [RegistrationController::class, 'getUser'])->middleware('auth')->name('account');
 

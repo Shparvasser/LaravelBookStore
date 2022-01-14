@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RatingRequest;
@@ -7,9 +6,10 @@ use App\Repositories\RatingRepository;
 
 class RatingController extends Controller
 {
-    function __construct(private RatingRepository $ratingRepository)
+    public function __construct(private RatingRepository $ratingRepository)
     {
     }
+
     /**
      * ratingOn
      *

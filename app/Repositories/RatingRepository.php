@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Book;
@@ -8,7 +7,7 @@ use Facade\Ignition\ErrorPage\Renderer;
 
 class RatingRepository
 {
-    function __construct(private Rating $model)
+    public function __construct(private Rating $model)
     {
     }
 

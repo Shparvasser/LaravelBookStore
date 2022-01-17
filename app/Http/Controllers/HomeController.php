@@ -21,7 +21,8 @@ class HomeController extends Controller
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->paginate->paginate();
+        $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
+        $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
         $totalPages = $this->paginate->getTotalPages();
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings,'pages' => $totalPages ]);
@@ -30,7 +31,8 @@ class HomeController extends Controller
     public function totalBooks($page)
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->paginate->paginate($page);
+        $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
+        $ratings = $this->paginate->paginate($page, $ratingRepository);
         $totalPages = $this->paginate->getTotalPages($page);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages]);

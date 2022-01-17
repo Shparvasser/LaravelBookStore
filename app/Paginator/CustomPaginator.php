@@ -9,15 +9,15 @@ class CustomPaginator
 {
     protected $page;
 
-    public function __construct(private RatingRepository $ratingRepository, protected $limit = 2)
+    public function __construct(protected $limit = 2)
     {
         $this->limit = $limit;
     }
 
-    public function paginate($page = 1)
+    public function paginate($page = 1, $sqlQuery)
     {
         $start = ($page - 1) * $this->limit;
-        return $this->ratingRepository->getModelsBooksRatings()
+        return $sqlQuery
         ->limit($this->limit)
         ->offset($start)
         ->get();
@@ -35,15 +35,6 @@ class CustomPaginator
     {
         $totalBooks = $this->getTotalBooks();
         return ['paging'=>round($totalBooks/$this->limit),'current'=>$page];
-    }
-
-    public function paginateByCategory($id, $page =1)
-    {
-        $start = ($page - 1) * $this->limit;
-        return $this->ratingRepository->getModelsCategoriesBooksRatings($id)
-        ->limit($this->limit)
-        ->offset($start)
-        ->get();
     }
 
     public function getTotalBooksCategory($id)

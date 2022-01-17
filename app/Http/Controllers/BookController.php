@@ -135,7 +135,8 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->paginate->paginateByCategory($id, $page = 1);
+        $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
         $totalPages = $this->paginate->getTotalPagesCategory($id, $page = 1);
 
         return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages,'id'=>$id]);
@@ -144,7 +145,8 @@ class BookController extends Controller
     public function totalBooksByCategory($id, $page)
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->paginate->paginateByCategory($id, $page);
+        $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $ratings = $this->paginate->paginate($page, $ratingRepository);
         $totalPages = $this->paginate->getTotalPagesCategory($id, $page);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages,'id'=>$id]);

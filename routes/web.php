@@ -52,3 +52,4 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/category/{id}', [BookController::class, 'getBookByCategory'])->name('getBookByCategory');
+Route::get('/category/{id}/page/{page}', [BookController::class, 'totalBooksByCategory'])->name('pageCategory');

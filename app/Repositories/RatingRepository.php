@@ -8,7 +8,7 @@ use Facade\Ignition\ErrorPage\Renderer;
 
 class RatingRepository
 {
-    function __construct(private Rating $model)
+    public function __construct(private Rating $model)
     {
     }
 
@@ -60,17 +60,14 @@ class RatingRepository
      *
      * @return
      */
-    public function getModelsBooksRatings($start, $limit)
+    public function getModelsBooksRatings()
     {
         return $this->model::query()
             ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
             ->selectRaw('books.*, AVG(rating) as rating')
             ->groupBy('id')
             ->with('user')
-            ->orderBy('slug')
-            ->limit($limit)
-            ->offset($start)
-            ->get();
+            ->orderBy('slug');
 
         // ->paginate(9);
         // order by id asc limit 15 offset 15
@@ -79,9 +76,9 @@ class RatingRepository
     /**
      * getQuery
      *
-     * @return \Illuminate\Support\Collection
+     * @return
      */
-    public function getModelsCategoriesBooksRatings($id): \Illuminate\Support\Collection
+    public function getModelsCategoriesBooksRatings($id)
     {
         return $this->model::query()
             ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
@@ -90,7 +87,7 @@ class RatingRepository
             ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')
             ->where('categories.id', $id)
             ->groupBy('book_id')
-            ->with('user')
-            ->get();
+            ->with('user');
+        // ->get();
     }
 }

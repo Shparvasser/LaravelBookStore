@@ -46,7 +46,7 @@
             <ul class="pagination">
                 @if ($pages['current'] > 1)
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('page', [$pages['current'] - 1]) }}">Previose</a>
+                            href="{{ route('page', [$pages['current'] - 1]) }}">Previous</a>
                     </li>
                 @endif
                 @for ($i = 1; $i <= $pages['paging']; $i++)
@@ -66,7 +66,7 @@
             <ul class="pagination">
                 @if ($pages['current'] > 1)
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('pageCategory', [$id, $pages['current'] - 1]) }}">Previose</a>
+                            href="{{ route('pageCategory', [$id, $pages['current'] - 1]) }}">Previous</a>
                     </li>
                 @endif
                 @for ($i = 1; $i <= $pages['paging']; $i++)

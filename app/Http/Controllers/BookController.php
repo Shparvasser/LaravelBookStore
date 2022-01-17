@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Paginate;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
-use App\Services\RatingService;
 use App\Http\Requests\BookRequest;
+use App\Paginator\CustomPaginator;
 use App\Repositories\BookRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\RatingRepository;
@@ -15,7 +14,7 @@ use App\Repositories\CategoryRepository;
 
 class BookController extends Controller
 {
-    public function __construct(private Paginate $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private ImageService $imageService)
+    public function __construct(private CustomPaginator $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private ImageService $imageService)
     {
     }
 
@@ -136,16 +135,8 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        // $ratings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
-        // $page = 1;
-        // $limit = 2;
-        // $start = ($page - 1) * $limit;
-        // $totalBooks = $this->bookRepository->getTotalBooks();
-        // $totalPages = ($totalBooks / $limit) + 1;
-        $ratings = $this->paginate->paginateByCategory( $id,$page = 1);
-        $totalPages = $this->paginate->getTotalPagesCategory($id,$page = 1);
-
-
+        $ratings = $this->paginate->paginateByCategory($id, $page = 1);
+        $totalPages = $this->paginate->getTotalPagesCategory($id, $page = 1);
 
         return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages,'id'=>$id]);
     }

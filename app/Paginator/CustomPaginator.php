@@ -1,14 +1,13 @@
 <?php
-namespace App;
+namespace App\Paginator;
 
 use App\Models\Book;
 use App\Models\Rating;
 use App\Repositories\RatingRepository;
 
-class Paginate
+class CustomPaginator
 {
     protected $page;
-
 
     public function __construct(private RatingRepository $ratingRepository, protected $limit = 2)
     {
@@ -49,15 +48,16 @@ class Paginate
 
     public function getTotalBooksCategory($id)
     {
-        $count = count(Rating::query()
+        $count = Rating::query()
         ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
         ->join('book_category', 'book_category.book_id', '=', 'books.id')
         ->join('categories', 'categories.id', '=', 'book_category.category_id')
         ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')
         ->where('categories.id', $id)
-        ->groupBy('book_id')
+        ->groupBy('categories.id')
         ->with('user')
-        ->get());
+        ->count();
+
         return $count;
     }
 

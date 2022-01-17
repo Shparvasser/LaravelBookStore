@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Paginate;
-use App\Services\RatingService;
+use App\Paginator\CustomPaginator;
 use App\Repositories\BookRepository;
 use App\Repositories\RatingRepository;
 use App\Repositories\CategoryRepository;
 
 class HomeController extends Controller
 {
-    public function __construct(private Paginate $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository)
+    public function __construct(private CustomPaginator $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository)
     {
     }
 

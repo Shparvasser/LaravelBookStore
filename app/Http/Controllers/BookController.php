@@ -136,13 +136,11 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $getModelsCategoriesBooksRatings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
         $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
+        $ratings = $this->paginate->paginate($getTotalBooksCategory, $page = 1, $getModelsCategoriesBooksRatings);
 
-        $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
-        $totalPages = $this->paginate->totalCount($page = 1, $getTotalBooksCategory);
-
-        return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages,'id'=>$id]);
+        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page,'id'=>$id]);
     }
 
     /**
@@ -155,12 +153,10 @@ class BookController extends Controller
     public function totalBooksByCategory(int $id, int $page):\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $getModelsCategoriesBooksRatings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
         $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
+        $ratings = $this->paginate->paginate($getTotalBooksCategory, $page, $getModelsCategoriesBooksRatings);
 
-        $ratings = $this->paginate->paginate($page, $ratingRepository);
-        $totalPages = $this->paginate->totalCount($page, $getTotalBooksCategory);
-
-        return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages,'id'=>$id]);
+        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page,'id'=>$id]);
     }
 }

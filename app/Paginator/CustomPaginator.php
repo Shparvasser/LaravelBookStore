@@ -3,52 +3,65 @@ namespace App\Paginator;
 
 class CustomPaginator
 {
+    protected $start;
     public function __construct(protected int $limit = 2)
     {
         $this->limit = $limit;
     }
 
+
     /**
      * paginate
      *
-     * @param  mixed $page
-     * @param  mixed $sqlQuery
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param  int $count
+     * @param  int $page
+     * @param  \Illuminate\Database\Eloquent\Builder $sqlQuery
+     * @return array
      */
-    public function paginate(int $page = 1, \Illuminate\Database\Eloquent\Builder $sqlQuery):\Illuminate\Database\Eloquent\Collection
+    public function paginate(int $count, int $page = 1, \Illuminate\Database\Eloquent\Builder $sqlQuery):array
     {
-        $start = ($page - 1) * $this->limit;
+        $totalCount = $this->totalCount($count);
+        $this->offset($page);
+        $perPage = $this->perPage($sqlQuery);
+        $paging = round($totalCount/$this->limit);
 
-        return $sqlQuery
-        ->limit($this->limit)
-        ->offset($start)
-        ->get();
+        return ['collection'=>$perPage,'paging'=>$paging, 'current'=>$page];
     }
 
     /**
      * getTotalPages
      *
-     * @param  int $page
      * @param  int $count
-     * @return array
+     * @return int
      */
-    public function totalCount(int $page = 1, $count)
+    public function totalCount(int $count):int
     {
-        $totalCount = $count;
-        return ['paging'=>round($totalCount/$this->limit),'current'=>$page];
+        return $count;
     }
 
-    // /**
-    //  * getTotalPages
-    //  *
-    //  * @param  int $page
-    //  * @param  int $method
-    //  * @return array
-    //  */
-    // public function getTotalPages(int $page = 1, $totalCount)
-    // {
-    //     $totalBooks = $totalCount;
+    /**
+     * offset
+     *
+     * @param  mixed $page
+     * @return int
+     */
+    public function offset(int $page = 1):int
+    {
+        $this->start = ($page - 1) * $this->limit;
+        return $this->start;
+    }
 
-    //     return ['paging'=>round($totalBooks/$this->limit),'current'=>$page];
-    // }
+    /**
+     * perPage
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $sqlQuery
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function perPage(\Illuminate\Database\Eloquent\Builder $sqlQuery):\Illuminate\Database\Eloquent\Collection
+    {
+        return $sqlQuery
+        ->limit($this->limit)
+        ->offset($this->start)
+        ->get();
+    }
 }

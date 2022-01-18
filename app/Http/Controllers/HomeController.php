@@ -23,12 +23,11 @@ class HomeController extends Controller
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
-        $getTotalBooks = $this-> bookRepository->getTotalBooks();
-        $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
-        $totalPages = $this->paginate->totalCount($page = 1, $getTotalBooks);
+        $getModelsBooksRatings = $this->ratingRepository->getModelsBooksRatings();
+        $getTotalBooks = $this->bookRepository->getTotalBooks();
+        $ratings = $this->paginate->paginate($getTotalBooks, $page = 1, $getModelsBooksRatings);
 
-        return view('home', ['categories' => $categories, 'ratings' => $ratings,'pages' => $totalPages ]);
+        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page]);
     }
 
     /**
@@ -40,11 +39,10 @@ class HomeController extends Controller
     public function totalBooks(int $page):\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
+        $getModelsBooksRatings = $this->ratingRepository->getModelsBooksRatings();
         $getTotalBooks = $this-> bookRepository->getTotalBooks();
-        $ratings = $this->paginate->paginate($page, $ratingRepository);
-        $totalPages = $this->paginate->totalCount($page, $getTotalBooks);
+        $ratings = $this->paginate->paginate($getTotalBooks, $page, $getModelsBooksRatings);
 
-        return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages]);
+        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page]);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\RatingService;
 use App\Repositories\BookRepository;
 use App\Repositories\RatingRepository;
 use App\Repositories\CategoryRepository;
@@ -20,7 +19,7 @@ class HomeController extends Controller
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->ratingRepository->getModelsBooksRatings();
+        $ratings = $this->ratingRepository->getBooksWithRating();
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings]);
     }

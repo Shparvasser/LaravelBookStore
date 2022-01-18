@@ -79,11 +79,11 @@ class BookRepository
      * deleteBook
      *
      * @param  string $slug
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     * @return void
      */
-    public function deleteBook(string $slug): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    public function deleteBook(string $slug): void
     {
-        return $this->model::where('slug', $slug)->delete() ? response(null, 204) : response(null, 500);
+        $this->model::where('slug', $slug)->delete();
     }
 
     /**

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
-use App\Services\RatingService;
 use App\Http\Requests\BookRequest;
 use App\Repositories\BookRepository;
 use Illuminate\Support\Facades\Auth;
@@ -116,13 +115,13 @@ class BookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  string $slug
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+    public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $this->bookRepository->deleteBook($slug);
 
-        return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
+        return redirect()->route('admin-panel')->with('success', 'The book has been deleted') ? response(null, 204) : response(null, 500);
     }
 
     /**
@@ -134,7 +133,7 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $ratings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $ratings = $this->ratingRepository->getCategoriesBooksRatings($id);
 
         return view('home', ['ratings' => $ratings, 'categories' => $categories]);
     }

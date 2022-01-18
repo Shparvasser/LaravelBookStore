@@ -88,12 +88,12 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
-    public function destroy(int $id): \Illuminate\Http\RedirectResponse
+    public function destroy(int $id): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $this->categoryRepository->deleteCategory($id);
 
-        return redirect()->route('admin-panel')->with('success', 'The category has been deleted');
+        return redirect()->route('admin-panel')->with('success', 'The category has been deleted') ? response(null, 204) : response(null, 500);
     }
 }

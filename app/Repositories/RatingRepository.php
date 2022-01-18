@@ -1,9 +1,7 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Book;
 use App\Models\Rating;
-use Facade\Ignition\ErrorPage\Renderer;
 
 class RatingRepository
 {
@@ -40,26 +38,12 @@ class RatingRepository
         ]);
     }
 
-    // /**
-    //  * getQuery
-    //  *
-    //  * @return \Illuminate\Support\Collection
-    //  */
-    // public function getModelsBooksRatings(): \Illuminate\Support\Collection
-    // {
-    //     return $this->model::query()
-    //         ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
-    //         ->selectRaw('books.*, AVG(rating) as rating')
-    //         ->groupBy('id')
-    //         ->with('user')
-    //         ->get();
-    // }
     /**
      * getQuery
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getModelsBooksRatings(): \Illuminate\Pagination\LengthAwarePaginator
+    public function getBooksWithRating(): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->model::query()
             ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
@@ -75,7 +59,7 @@ class RatingRepository
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getModelsCategoriesBooksRatings($id): \Illuminate\Pagination\LengthAwarePaginator
+    public function getCategoriesBooksRatings($id): \Illuminate\Pagination\LengthAwarePaginator
     {
         return $this->model::query()
             ->rightjoin('books', 'books.id', '=', 'ratings.book_id')

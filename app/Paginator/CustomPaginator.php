@@ -29,7 +29,7 @@ class CustomPaginator
     }
 
     /**
-     * getTotalPages
+     * totalCount
      *
      * @param  int $count
      * @return int

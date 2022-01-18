@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\PageService;
 use App\Services\ImageService;
 use App\Http\Requests\BookRequest;
 use App\Paginator\CustomPaginator;
@@ -14,7 +15,7 @@ use App\Repositories\CategoryRepository;
 
 class BookController extends Controller
 {
-    public function __construct(private CustomPaginator $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private ImageService $imageService)
+    public function __construct(private PageService $pageService, private CustomPaginator $paginate, private BookRepository $bookRepository, private RatingRepository $ratingRepository, private CategoryRepository $categoryRepository, private ImageService $imageService)
     {
     }
 
@@ -136,18 +137,27 @@ class BookController extends Controller
     {
         $categories = $this->categoryRepository->orderByTitle();
         $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
         $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
-        $totalPages = $this->paginate->getTotalPagesCategory($id, $page = 1);
+        $totalPages = $this->pageService->getTotalPages($page, $getTotalBooksCategory);
 
         return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages,'id'=>$id]);
     }
 
-    public function totalBooksByCategory($id, $page)
+    /**
+     * totalBooksByCategory
+     *
+     * @param  int $id
+     * @param  int $page
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function totalBooksByCategory(int $id, int $page):\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
         $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
+        $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
         $ratings = $this->paginate->paginate($page, $ratingRepository);
-        $totalPages = $this->paginate->getTotalPagesCategory($id, $page);
+        $totalPages = $this->pageService->getTotalPages($page, $getTotalBooksCategory);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages,'id'=>$id]);
     }

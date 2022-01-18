@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Book;
 use App\Models\Rating;
-use Facade\Ignition\ErrorPage\Renderer;
 
 class RatingRepository
 {
@@ -41,26 +39,12 @@ class RatingRepository
         ]);
     }
 
-    // /**
-    //  * getQuery
-    //  *
-    //  * @return \Illuminate\Support\Collection
-    //  */
-    // public function getModelsBooksRatings(): \Illuminate\Support\Collection
-    // {
-    //     return $this->model::query()
-    //         ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
-    //         ->selectRaw('books.*, AVG(rating) as rating')
-    //         ->groupBy('id')
-    //         ->with('user')
-    //         ->get();
-    // }
     /**
      * getQuery
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getModelsBooksRatings()
+    public function getModelsBooksRatings():\Illuminate\Database\Eloquent\Builder
     {
         return $this->model::query()
             ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
@@ -68,17 +52,15 @@ class RatingRepository
             ->groupBy('id')
             ->with('user')
             ->orderBy('slug');
-
-        // ->paginate(9);
-        // order by id asc limit 15 offset 15
     }
 
     /**
-     * getQuery
+     * getModelsCategoriesBooksRatings
      *
-     * @return
+     * @param  mixed $id
+     * @return Illuminate\Database\Eloquent\Builder
      */
-    public function getModelsCategoriesBooksRatings($id)
+    public function getModelsCategoriesBooksRatings(int $id):\Illuminate\Database\Eloquent\Builder
     {
         return $this->model::query()
             ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
@@ -88,6 +70,26 @@ class RatingRepository
             ->where('categories.id', $id)
             ->groupBy('book_id')
             ->with('user');
-        // ->get();
+    }
+
+    /**
+     * getTotalBooksCategory
+     *
+     * @param  mixed $id
+     * @return int
+     */
+    public function getTotalBooksCategory(int $id):int
+    {
+        $count = $this->model::query()
+        ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
+        ->join('book_category', 'book_category.book_id', '=', 'books.id')
+        ->join('categories', 'categories.id', '=', 'book_category.category_id')
+        ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')
+        ->where('categories.id', $id)
+        ->groupBy('categories.id')
+        ->with('user')
+        ->count();
+
+        return $count;
     }
 }

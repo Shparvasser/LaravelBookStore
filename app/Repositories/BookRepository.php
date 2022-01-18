@@ -7,7 +7,7 @@ use App\Services\ImageService;
 
 class BookRepository
 {
-    function __construct(private Book $model, private ImageService $imageService,)
+    public function __construct(private Book $model, private ImageService $imageService, )
     {
     }
 
@@ -115,6 +115,11 @@ class BookRepository
         return $this->model::with('user')->get();
     }
 
+    /**
+     * getTotalBooks
+     *
+     * @return int
+     */
     public function getTotalBooks()
     {
         $count = $this->model::query()

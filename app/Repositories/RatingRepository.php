@@ -58,7 +58,7 @@ class RatingRepository
      * getModelsCategoriesBooksRatings
      *
      * @param  mixed $id
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getModelsCategoriesBooksRatings(int $id):\Illuminate\Database\Eloquent\Builder
     {

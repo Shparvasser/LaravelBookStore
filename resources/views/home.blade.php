@@ -64,6 +64,9 @@
     @if (Route::is('getBookByCategory', 'pageCategory'))
         <nav aria-label="Page navigation example">
             <ul class="pagination">
+                {{-- <li class="page-item"><a class="page-link"
+                        href="{{ route('pageCategory', [$id, ($pages['current'] = 1)]) }}">First</a>
+                </li> --}}
                 @if ($pages['current'] > 1)
                     <li class="page-item"><a class="page-link"
                             href="{{ route('pageCategory', [$id, $pages['current'] - 1]) }}">Previous</a>
@@ -79,6 +82,8 @@
                             href="{{ route('pageCategory', [$id, $pages['current'] + 1]) }}">Next</a>
                     </li>
                 @endif
+                {{-- <li class="page-item @if ($pages['current'] == $pages['paging']) active @endif"><a class="page-link"
+                        href="{{ route('pageCategory', [$id, $pages['paging']]) }}">Last</a></li> --}}
             </ul>
         </nav>
     @endif

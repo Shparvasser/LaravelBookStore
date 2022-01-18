@@ -13,10 +13,10 @@ class PageService
      * getTotalPages
      *
      * @param  int $page
-     * @param  mixed $method
+     * @param  int $method
      * @return array
      */
-    public function getTotalPages(int $page = 1, mixed $method)
+    public function getTotalPages(int $page = 1, int $method)
     {
         $totalBooks = $method;
 

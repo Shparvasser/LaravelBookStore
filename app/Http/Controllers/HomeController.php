@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Services\PageService;
 use App\Paginator\CustomPaginator;
 use App\Repositories\BookRepository;
 use App\Repositories\RatingRepository;
 use App\Repositories\CategoryRepository;
-use App\Services\PageService;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,7 @@ class HomeController extends Controller
         $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
         $getTotalBooks = $this-> bookRepository->getTotalBooks();
         $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
-        $totalPages = $this->pageService->getTotalPages($page = 1, $getTotalBooks);
+        $totalPages = $this->paginate->totalCount($page = 1, $getTotalBooks);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings,'pages' => $totalPages ]);
     }
@@ -42,7 +43,7 @@ class HomeController extends Controller
         $ratingRepository = $this->ratingRepository->getModelsBooksRatings();
         $getTotalBooks = $this-> bookRepository->getTotalBooks();
         $ratings = $this->paginate->paginate($page, $ratingRepository);
-        $totalPages = $this->pageService->getTotalPages($page, $getTotalBooks);
+        $totalPages = $this->paginate->totalCount($page, $getTotalBooks);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages]);
     }

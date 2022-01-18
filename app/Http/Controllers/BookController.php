@@ -138,8 +138,9 @@ class BookController extends Controller
         $categories = $this->categoryRepository->orderByTitle();
         $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
         $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
+
         $ratings = $this->paginate->paginate($page = 1, $ratingRepository);
-        $totalPages = $this->pageService->getTotalPages($page, $getTotalBooksCategory);
+        $totalPages = $this->paginate->totalCount($page = 1, $getTotalBooksCategory);
 
         return view('home', ['ratings' => $ratings, 'categories' => $categories, 'pages' => $totalPages,'id'=>$id]);
     }
@@ -156,8 +157,9 @@ class BookController extends Controller
         $categories = $this->categoryRepository->orderByTitle();
         $ratingRepository = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
         $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
+
         $ratings = $this->paginate->paginate($page, $ratingRepository);
-        $totalPages = $this->pageService->getTotalPages($page, $getTotalBooksCategory);
+        $totalPages = $this->paginate->totalCount($page, $getTotalBooksCategory);
 
         return view('home', ['categories' => $categories, 'ratings' => $ratings, 'pages' => $totalPages,'id'=>$id]);
     }

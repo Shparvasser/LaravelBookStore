@@ -24,4 +24,31 @@ class CustomPaginator
         ->offset($start)
         ->get();
     }
+
+    /**
+     * getTotalPages
+     *
+     * @param  int $page
+     * @param  int $count
+     * @return array
+     */
+    public function totalCount(int $page = 1, $count)
+    {
+        $totalCount = $count;
+        return ['paging'=>round($totalCount/$this->limit),'current'=>$page];
+    }
+
+    // /**
+    //  * getTotalPages
+    //  *
+    //  * @param  int $page
+    //  * @param  int $method
+    //  * @return array
+    //  */
+    // public function getTotalPages(int $page = 1, $totalCount)
+    // {
+    //     $totalBooks = $totalCount;
+
+    //     return ['paging'=>round($totalBooks/$this->limit),'current'=>$page];
+    // }
 }

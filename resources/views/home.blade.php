@@ -13,7 +13,7 @@
         @endforeach
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        @foreach ($ratings as $rating)
+        @foreach ($paginate['collection'] as $rating)
             <div class="col mb-4">
                 <div class="card shadow-sm">
                     <div class="card-header">
@@ -44,28 +44,29 @@
     @if (!Route::is('getBookByCategory', 'pageCategory'))
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                @if ($current > 1)
+                @if ($paginate['current'] > 1)
                     <li class="page-item">
-                        <a class="page-link" href="{{ route('page', [$current - ($current - 1)]) }}">First</a>
+                        <a class="page-link"
+                            href="{{ route('page', [$paginate['current'] - ($paginate['current'] - 1)]) }}">First</a>
                     </li>
                 @endif
-                @if ($current > 1)
+                @if ($paginate['current'] > 1)
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('page', [$current - 1]) }}">Previous</a>
+                            href="{{ route('page', [$paginate['prevLink']]) }}">Previous</a>
                     </li>
                 @endif
-                @for ($i = 1; $i <= $paging; $i++)
-                    <li class="page-item @if ($current == $i) active @endif"><a class="page-link"
+                @for ($i = 1; $i <= $paginate['paginate']; $i++)
+                    <li class="page-item @if ($paginate['current'] == $i) active @endif"><a class="page-link"
                             href="{{ route('page', [$i]) }}">{{ $i }}</a></li>
                 @endfor
-                @if ($current < $paging)
+                @if ($paginate['current'] < $paginate['paginate'])
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('page', [$current + 1]) }}">Next</a>
+                            href="{{ route('page', [$paginate['nextLink']]) }}">Next</a>
                     </li>
                 @endif
-                @if ($current < $paging)
+                @if ($paginate['current'] < $paginate['paginate'])
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('page', [($current = $paging)]) }}">Last</a>
+                            href="{{ route('page', [($paginate['current'] = $paginate['paginate'])]) }}">Last</a>
                     </li>
                 @endif
             </ul>
@@ -74,29 +75,29 @@
     @if (Route::is('getBookByCategory', 'pageCategory'))
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                @if ($current > 1)
+                @if ($paginate['current'] > 1)
                     <li class="page-item">
                         <a class="page-link"
-                            href="{{ route('pageCategory', [$id, $current - ($current - 1)]) }}">First</a>
+                            href="{{ route('pageCategory', [$id, $paginate['current'] - ($paginate['current'] - 1)]) }}">First</a>
                     </li>
                 @endif
-                @if ($current != 1)
+                @if ($paginate['current'] != 1)
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('pageCategory', [$id, $current - 1]) }}">Previous</a>
+                            href="{{ route('pageCategory', [$id, $paginate['prevLink']]) }}">Previous</a>
                     </li>
                 @endif
-                @for ($i = 1; $i <= $paging; $i++)
-                    <li class="page-item @if ($current == $i) active @endif"><a class="page-link"
+                @for ($i = 1; $i <= $paginate['paginate']; $i++)
+                    <li class="page-item @if ($paginate['current'] == $i) active @endif"><a class="page-link"
                             href="{{ route('pageCategory', [$id, $i]) }}">{{ $i }}</a></li>
                 @endfor
-                @if ($current != $paging)
+                @if ($paginate['current'] != $paginate['paginate'])
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('pageCategory', [$id, $current + 1]) }}">Next</a>
+                            href="{{ route('pageCategory', [$id, $paginate['nextLink']]) }}">Next</a>
                     </li>
                 @endif
-                @if ($current < $paging)
+                @if ($paginate['current'] < $paginate['paginate'])
                     <li class="page-item"><a class="page-link"
-                            href="{{ route('pageCategory', [$id, ($current = $paging)]) }}">Last</a>
+                            href="{{ route('pageCategory', [$id, ($paginate['current'] = $paginate['paginate'])]) }}">Last</a>
                     </li>
                 @endif
             </ul>

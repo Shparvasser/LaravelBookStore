@@ -6,7 +6,7 @@ use App\Models\Comment;
 
 class CommentRepository
 {
-    function __construct(private Comment $model)
+    public function __construct(private Comment $model)
     {
     }
 

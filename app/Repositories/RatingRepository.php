@@ -44,12 +44,12 @@ class RatingRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getModelsBooksRatings():\Illuminate\Database\Eloquent\Builder
+    public function getBooksRatings():\Illuminate\Database\Eloquent\Builder
     {
         return $this->model::query()
             ->rightJoin('books', 'books.id', '=', 'ratings.book_id')
             ->selectRaw('books.*, AVG(rating) as rating')
-            ->groupBy('id')
+            ->groupBy('books.id')
             ->with('user')
             ->orderBy('slug');
     }
@@ -60,7 +60,7 @@ class RatingRepository
      * @param  mixed $id
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getModelsCategoriesBooksRatings(int $id):\Illuminate\Database\Eloquent\Builder
+    public function getCategoriesBooksRatings(int $id):\Illuminate\Database\Eloquent\Builder
     {
         return $this->model::query()
             ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
@@ -70,26 +70,5 @@ class RatingRepository
             ->where('categories.id', $id)
             ->groupBy('book_id')
             ->with('user');
-    }
-
-    /**
-     * getTotalBooksCategory
-     *
-     * @param  mixed $id
-     * @return int
-     */
-    public function getTotalBooksCategory(int $id):int
-    {
-        $count = $this->model::query()
-        ->rightjoin('books', 'books.id', '=', 'ratings.book_id')
-        ->join('book_category', 'book_category.book_id', '=', 'books.id')
-        ->join('categories', 'categories.id', '=', 'book_category.category_id')
-        ->selectRaw('book_category.book_id, books.*, AVG(rating) as rating')
-        ->where('categories.id', $id)
-        ->groupBy('categories.id')
-        ->with('user')
-        ->count();
-
-        return $count;
     }
 }

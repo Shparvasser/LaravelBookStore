@@ -122,9 +122,14 @@ class BookController extends Controller
      */
     public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        $this->bookRepository->deleteBook($slug);
+        if ($this->bookRepository->deleteBook($slug)) {
+            $success = 'success';
+            $message = 'The book has been deleted';
+        }
+        $success = 'danger';
+        $message = "Something went wrong";
 
-        return redirect()->route('admin-panel')->with('success', 'The book has been deleted');
+        return redirect()->route('admin-panel')->with($success, $message);
     }
 
     /**
@@ -136,11 +141,10 @@ class BookController extends Controller
     public function getBookByCategory(int $id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $getModelsCategoriesBooksRatings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
-        $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
-        $ratings = $this->paginate->paginate($getTotalBooksCategory, $page = 1, $getModelsCategoriesBooksRatings);
+        $getCategoriesBooksRatings = $this->ratingRepository->getCategoriesBooksRatings($id);
+        $paginate = $this->paginate->paginate($page = 1, $getCategoriesBooksRatings);
 
-        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page,'id'=>$id]);
+        return view('home', ['categories' => $categories, 'paginate'=>$paginate,'id'=>$id]);
     }
 
     /**
@@ -153,10 +157,9 @@ class BookController extends Controller
     public function totalBooksByCategory(int $id, int $page):\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         $categories = $this->categoryRepository->orderByTitle();
-        $getModelsCategoriesBooksRatings = $this->ratingRepository->getModelsCategoriesBooksRatings($id);
-        $getTotalBooksCategory = $this->ratingRepository->getTotalBooksCategory($id);
-        $ratings = $this->paginate->paginate($getTotalBooksCategory, $page, $getModelsCategoriesBooksRatings);
+        $getCategoriesBooksRatings = $this->ratingRepository->getCategoriesBooksRatings($id);
+        $paginate = $this->paginate->paginate($page, $getCategoriesBooksRatings);
 
-        return view('home', ['categories' => $categories, 'ratings' => $ratings['collection'],'paging' => $ratings['paging'] ,'current'=>$page,'id'=>$id]);
+        return view('home', ['categories' => $categories, 'paginate'=>$paginate,'id'=>$id]);
     }
 }

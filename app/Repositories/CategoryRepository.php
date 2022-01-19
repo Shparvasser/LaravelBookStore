@@ -6,7 +6,6 @@ use App\Models\Category;
 
 class CategoryRepository
 {
-
     public function __construct(private Category $model)
     {
     }
@@ -14,7 +13,7 @@ class CategoryRepository
     /**
      * getCategoryById
      *
-     * @param  mixed $id
+     * @param  int $id
      * @return mixed
      */
     public function getCategoryById(int $id): mixed
@@ -47,7 +46,7 @@ class CategoryRepository
     /**
      * createCategory
      *
-     * @param  mixed $req
+     * @param  array $req
      * @return void
      */
     public function createCategory(array $request): void
@@ -61,8 +60,8 @@ class CategoryRepository
     /**
      * updateCategory
      *
-     * @param  mixed $req
-     * @param  mixed $category
+     * @param  array $req
+     * @param  object $category
      * @return void
      */
     public function updateCategory(array $request, object $category): void
@@ -75,11 +74,11 @@ class CategoryRepository
     /**
      * deleteCategory
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int $id
+     * @return true|false
      */
-    public function deleteCategory(int $id): void
+    public function deleteCategory(int $id): bool
     {
-        $this->model::where('id', $id)->delete();
+        return $this->model::where('id', $id)->delete();
     }
 }

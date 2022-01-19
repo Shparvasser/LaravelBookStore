@@ -93,8 +93,13 @@ class CategoryController extends Controller
      */
     public function destroy(int $id): \Illuminate\Http\RedirectResponse
     {
-        $this->categoryRepository->deleteCategory($id);
+        if ($this->categoryRepository->deleteCategory($id)) {
+            $success = 'success';
+            $message = 'The category has been deleted';
+        }
+        $success = 'danger';
+        $message = "Something went wrong";
 
-        return redirect()->route('admin-panel')->with('success', 'The category has been deleted');
+        return redirect()->route('admin-panel')->with($success, $message);
     }
 }

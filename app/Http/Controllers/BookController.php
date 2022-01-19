@@ -115,13 +115,18 @@ class BookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  string $slug
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    public function destroy(string $slug): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        $this->bookRepository->deleteBook($slug);
+        if ($this->bookRepository->deleteBook($slug)) {
+            $success = 'success';
+            $message = 'The book has been deleted';
+        }
+        $success = 'danger';
+        $message = 'Something went wrong';
 
-        return redirect()->route('admin-panel')->with('success', 'The book has been deleted') ? response(null, 204) : response(null, 500);
+        return redirect()->route('admin-panel')->with($success, $message);
     }
 
     /**

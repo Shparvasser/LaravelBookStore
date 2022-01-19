@@ -74,10 +74,10 @@ class CategoryRepository
      * deleteCategory
      *
      * @param  mixed $id
-     * @return void
+     * @return bool
      */
-    public function deleteCategory(int $id): void
+    public function deleteCategory(int $id): bool
     {
-        $this->model::where('id', $id)->delete();
+        return $this->model::where('id', $id)->delete();
     }
 }

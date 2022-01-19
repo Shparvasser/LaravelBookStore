@@ -79,11 +79,11 @@ class BookRepository
      * deleteBook
      *
      * @param  string $slug
-     * @return void
+     * @return bool
      */
-    public function deleteBook(string $slug): void
+    public function deleteBook(string $slug): bool
     {
-        $this->model::where('slug', $slug)->delete();
+        return $this->model::where('slug', $slug)->delete();
     }
 
     /**

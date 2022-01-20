@@ -3,7 +3,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class BookSeeder extends Seeder
 {
     /**
      * Run the database seeds.

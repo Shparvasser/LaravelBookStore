@@ -3,7 +3,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,5 +12,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+        //
     }
 }

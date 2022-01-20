@@ -53,17 +53,7 @@ class User extends Authenticatable
      */
     public function books(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Book::class);
-    }
-
-    /**
-     * reviews
-     *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Book::class, 'author_id', 'id');
     }
 
     /**

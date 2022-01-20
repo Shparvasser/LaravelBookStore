@@ -125,14 +125,7 @@ main branch - It's branch for staging, we merge all feature branches in master.
 
 --MIGRATION--
 
-You need to do this action first 
-
-In termenal:
-1) php artisan permission:create-role user web
-2) php artisan permission:create-role admin web
-
-When creating a user, according to the standard, he is given the role of "user" for the administrator, you need to manually change the role in the table 
-
 --DB SEED--
 
-Now it's not working!!!
+In terminal:
+1)php artis db:seed 

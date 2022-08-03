@@ -1,4 +1,4 @@
-const swe = {
+var swe = {
         custom: {
             attach_purchase_document: {
               required: 'Köpedokument är obligatoriskt.',

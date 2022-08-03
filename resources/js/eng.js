@@ -1,4 +1,4 @@
-const eng = {
+var eng = {
         custom: {
           attach_purchase_document: {
             required: 'The purchase document field is required.',

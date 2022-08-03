@@ -3,5 +3,5 @@
 return array (
   'failed' => '',
   'password' => '',
-  'throttle' => '',
+  'throttle' => 'sadadadadadadad',
 );

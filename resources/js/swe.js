@@ -4,6 +4,5 @@ var translations = {
         "other": "%i users online."
     },
     "simple_key": "Hi, I am a key!",
-    "saddd": (field) => "sadad"
 };
 

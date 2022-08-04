@@ -9,6 +9,6 @@ var translations = {
         "required": "The online store URL field is required.",
         "customRegex": "The online store URL field may contain only Latin letters, numbers and hyphens",
         "max": "The online store URL may not be greater than {{args}} characters.",
-    },
+    }
 };
 
